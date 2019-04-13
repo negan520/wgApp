@@ -6,7 +6,7 @@ import {getInfo,getSwiper,getGameList,getChildGameList} from '../serve/getData';
 import {imageUrl} from "../serve/getData";
 import {baseStyle} from "../style/base";
 import {domain} from "../config/api";
-
+import {connect} from 'react-redux'
 class LogoTitle extends React.Component {
     render() {
         return (
@@ -26,7 +26,7 @@ class Homebutton extends React.Component {
         );
     }
 }
-export default class HomeScreen extends Component{
+ class HomeScreen extends Component{
     constructor(props){
         super(props);
         navigation = this.props.navigation;
@@ -97,7 +97,9 @@ export default class HomeScreen extends Component{
             this.setState({gameChild:res.Data});
         })
     }
-
+     shouldComponentUpdate(nextProps, nextState,user){
+        console.log('状态',nextProps,nextProps,user)
+     }
     static navigationOptions = {
         headerTitle:<LogoTitle />,
         headerLeft:<Homebutton/>,
@@ -233,3 +235,13 @@ const styles = StyleSheet.create({
         color:'#fff'
     }
 });
+export default connect(
+    (state) => ({
+        status: state.loginIn.status,
+        isSuccess: state.loginIn.isSuccess,
+        user: state.loginIn.user,
+    }),
+    (dispatch) => ({
+        login: () => dispatch(loginAction.login()),
+    })
+)(HomeScreen)
