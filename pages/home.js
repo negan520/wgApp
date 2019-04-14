@@ -6,7 +6,8 @@ import {getInfo,getSwiper,getGameList,getChildGameList} from '../serve/getData';
 import {imageUrl} from "../serve/getData";
 import {baseStyle} from "../style/base";
 import {domain} from "../config/api";
-import {connect} from 'react-redux'
+import {connect} from 'react-redux';
+import {login} from '../actions/loginAction'
 class LogoTitle extends React.Component {
     render() {
         return (
@@ -29,7 +30,7 @@ class Homebutton extends React.Component {
  class HomeScreen extends Component{
     constructor(props){
         super(props);
-        navigation = this.props.navigation;
+         _this = this;
         this.state={
             swipers:[],
             gameList:null,
@@ -97,8 +98,8 @@ class Homebutton extends React.Component {
             this.setState({gameChild:res.Data});
         })
     }
-     shouldComponentUpdate(nextProps, nextState,user){
-        console.log('状态',nextProps,nextProps,user)
+     componentDidUpdate(){
+        console.log(this.props,'iii')
      }
     static navigationOptions = {
         headerTitle:<LogoTitle />,
@@ -112,7 +113,7 @@ class Homebutton extends React.Component {
                 width:83,
             }}>
                     <Button
-                        onPress={() => navigation.navigate('Agent')}
+                        onPress={() => _this.props.navigation.navigate('Agent')}
                         title="登录"
                         color="#fff"
                     />
@@ -183,8 +184,16 @@ class Homebutton extends React.Component {
                         </Tab>
                         <Tab heading="彩票" activeTextStyle={{color:styles.gameTabStyle.color}} activeTabStyle={{backgroundColor:baseStyle.acyive(true)}} textStyle={{color:styles.gameTabStyle.color}} tabStyle={styles.gameTabStyle}>
                             <View>
-                                <View style={{width: 50, height: 50, backgroundColor: 'powderblue'}} />
-                                <View style={{width: 100, height: 100, backgroundColor: 'skyblue'}} />
+                                <View style={{width: 50, height: 50, backgroundColor: 'powderblue'}}>
+                                    <Button
+                                        onPress={this.props.login}
+                                        title="登录"
+                                        color="#fff"
+                                    />
+                                </View>
+                                <View style={{width: 100, height: 100, backgroundColor: 'skyblue'}}>
+                                    <Text>{this.props.status}</Text>
+                                </View>
                                 <View style={{width: 150, height: 150, backgroundColor: 'steelblue'}} />
                             </View>
                         </Tab>
@@ -242,6 +251,6 @@ export default connect(
         user: state.loginIn.user,
     }),
     (dispatch) => ({
-        login: () => dispatch(loginAction.login()),
+        login: () => dispatch(login()),
     })
 )(HomeScreen)
