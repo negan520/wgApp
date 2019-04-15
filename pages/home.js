@@ -1,5 +1,5 @@
 import React,{ Component } from 'react';
-import {Text,View,Button,Image,ImageBackground,StyleSheet,FlatList,ScrollView} from 'react-native';
+import {Text,View,Button,Image,ImageBackground,StyleSheet,FlatList,ScrollView,AsyncStorage} from 'react-native';
 import Swiper from 'react-native-swiper';
 import { Container, Header, Tab, Tabs, TabHeading, Icon} from 'native-base';
 import {getInfo,getSwiper,getGameList,getChildGameList} from '../serve/getData';
@@ -7,7 +7,7 @@ import {imageUrl} from "../serve/getData";
 import {baseStyle} from "../style/base";
 import {domain} from "../config/api";
 import {connect} from 'react-redux';
-import {login} from '../actions/loginAction'
+import {login,isLogin} from '../actions/loginAction'
 class LogoTitle extends React.Component {
     render() {
         return (
@@ -23,7 +23,7 @@ class Homebutton extends React.Component {
     }
     render() {
         return (
-            <Icon ios='ios-menu' onPress={() => navigation.openDrawer()} android="md-menu" style={{fontSize:30, color: '#fff',marginLeft:10}}/>
+            <Icon ios='ios-menu' onPress={() => _this.props.navigation.openDrawer()} android="md-menu" style={{fontSize:30, color: '#fff',marginLeft:10}}/>
         );
     }
 }
@@ -42,6 +42,13 @@ class Homebutton extends React.Component {
         }
     }
     componentDidMount(): void {
+        AsyncStorage.getItem('user').then(function (res) {
+            let data=JSON.parse(res);
+            if (data)
+            {
+                _this.props.login(data,'LOGIN_IN_DONE');
+            }
+        })
         getInfo().then(function (res) {//获取基本信息
 
         });
@@ -99,30 +106,30 @@ class Homebutton extends React.Component {
         })
     }
      componentDidUpdate(){
-        console.log(this.props,'iii')
+
      }
     static navigationOptions = {
         headerTitle:<LogoTitle />,
         headerLeft:<Homebutton/>,
         headerRight: (
-            <ImageBackground source={require('../images/header_login_regiter.png')} style={{flex: 1,
-                justifyContent: 'space-around',
-                flexDirection: 'row',
-                height:30,
-                alignItems:'flex-start',
-                width:83,
-            }}>
-                    <Button
-                        onPress={() => _this.props.navigation.navigate('Agent')}
-                        title="登录"
-                        color="#fff"
-                    />
-                    <Button
-                        onPress={() => navigation.navigate('Agent')}
-                        title="注册"
-                        color="#fff"
-                    />
-            </ImageBackground>
+                    <ImageBackground source={require('../images/header_login_regiter.png')} style={{flex: 1,
+                        justifyContent: 'space-around',
+                        flexDirection: 'row',
+                        height:30,
+                        alignItems:'flex-start',
+                        width:83,
+                    }}>
+                        <Button
+                            onPress={() => _this.props.navigation.navigate('signIn')}
+                            title="登录"
+                            color="#fff"
+                        />
+                        <Button
+                            onPress={() => navigation.navigate('Agent')}
+                            title="注册"
+                            color="#fff"
+                        />
+                    </ImageBackground>
         ),
         headerStyle: {
             backgroundColor:baseStyle.them.backgroundColor,
@@ -251,6 +258,7 @@ export default connect(
         user: state.loginIn.user,
     }),
     (dispatch) => ({
-        login: () => dispatch(login()),
+        login: (data,status) => dispatch(login(data,status)),
+        isLogin: (user) => dispatch(isLogin(user)),
     })
 )(HomeScreen)

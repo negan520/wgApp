@@ -1,11 +1,22 @@
 import * as types from '../constants/loginType';
-import {signIn} from "../serve/getData";
 let user = {};
-export function login(data) {
+export function login(data,sta) {
     return dispatch => {
         dispatch({type: types.LOGIN_IN_DOING}); // 正在执行登录请求
-        signIn({"UserName":"bixuzimu","Password":"shurumima123","VerifyCode":"","Device":"Mobile"}).then(function (res) {
-            dispatch({type:types.LOGIN_IN_DONE,user:res.Data});
-        })
+        console.log(data,sta,'chuanpu')
+        if (sta===types.LOGIN_IN_DONE)
+        {
+            dispatch({type:types.LOGIN_IN_DONE,user:data});
+        }
+    }
+}
+export function isLogin(user) {
+    return dispatch=>{
+        console.log('rrr',user)
+        if(user)
+        {
+            console.log('eee')
+            dispatch({type:types.LOGIN_IN_DONE,user:user})
+        }
     }
 }

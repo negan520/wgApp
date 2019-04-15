@@ -12,5 +12,12 @@ export const baseStyle=StyleSheet.create({
    },
    mainBackground:{
        backgroundColor:'#101d3d'
-   }
+   },
+   headerStyle:{
+       backgroundColor:'#000543',
+       color:'#fff'
+   },
+    colorWite:{
+       color:'#fff'
+    }
 });

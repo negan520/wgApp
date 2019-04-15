@@ -5,6 +5,7 @@ import HomeScreen from './pages/home';
 import Activity from './pages/Activity';
 import User from './pages/user';
 import Agent from './pages/agent';
+import signIn from './pages/signIn'
 import {Icon} from 'native-base';
 import {baseStyle} from "./style/base";
 const HomeStack = createStackNavigator({
@@ -71,6 +72,11 @@ const MyDrawerNavigator = createDrawerNavigator({
       Agent: {
         screen: Agent,
       },
+        signIn: {
+            screen: signIn,
+            title: '登录',
+            headerTitle:'登录'
+        },
 },
     {
       drawerBackgroundColor:baseStyle.them.backgroundColor,
@@ -78,7 +84,16 @@ const MyDrawerNavigator = createDrawerNavigator({
         activeTintColor:baseStyle.acyive(true),
         inactiveTintColor:'#fff'
       },
-        drawerType:'slide'
+        drawerType:'slide',
+        defaultNavigationOptions: {
+            headerStyle: {
+                backgroundColor: '#f4511e',
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+                fontWeight: 'bold',
+            },
+        },
     }
     );
 
