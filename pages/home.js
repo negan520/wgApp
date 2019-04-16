@@ -7,7 +7,8 @@ import {imageUrl} from "../serve/getData";
 import {baseStyle} from "../style/base";
 import {domain} from "../config/api";
 import {connect} from 'react-redux';
-import {login,isLogin} from '../actions/loginAction'
+import {login,isLogin} from '../actions/loginAction';
+import { NavigationActions } from 'react-navigation';
 class LogoTitle extends React.Component {
     render() {
         return (
@@ -26,7 +27,45 @@ class Homebutton extends React.Component {
             <Icon ios='ios-menu' onPress={() => _this.props.navigation.openDrawer()} android="md-menu" style={{fontSize:30, color: '#fff',marginLeft:10}}/>
         );
     }
+}class HeaderR extends React.Component {
+    componentDidUpdate(){
+        console.log(this.props.name,'sdf')
+    }
+    render() {
+        return this.props.isSuccess?(
+            <ImageBackground source={require('../images/header_login_regiter.png')} style={{flex: 1,
+                justifyContent: 'space-around',
+                flexDirection: 'row',
+                height:30,
+                alignItems:'flex-start',
+                width:83,
+            }}>
+                <Button
+                    onPress={() =>this.props.name.navigate('signIn')}
+                    title="登录"
+                    color="#fff"
+                />
+                <Button
+                    onPress={() => navigation.navigate('Agent')}
+                    title="注册"
+                    color="#fff"
+                />
+            </ImageBackground>
+        ):(<View>
+            <Button
+                onPress={() => navigation.navigate('Agent')}
+                title="退出"
+                color="#fff"
+            />
+        </View>)
+    }
 }
+
+let HeaderRContainer = connect((state) => ({
+    status: state.loginIn.status,
+    isSuccess: state.loginIn.isSuccess,
+    user: state.loginIn.user,
+}))(HeaderR);
  class HomeScreen extends Component{
     constructor(props){
         super(props);
@@ -108,37 +147,20 @@ class Homebutton extends React.Component {
      componentDidUpdate(){
 
      }
-    static navigationOptions = {
-        headerTitle:<LogoTitle />,
-        headerLeft:<Homebutton/>,
-        headerRight: (
-                    <ImageBackground source={require('../images/header_login_regiter.png')} style={{flex: 1,
-                        justifyContent: 'space-around',
-                        flexDirection: 'row',
-                        height:30,
-                        alignItems:'flex-start',
-                        width:83,
-                    }}>
-                        <Button
-                            onPress={() => _this.props.navigation.navigate('signIn')}
-                            title="登录"
-                            color="#fff"
-                        />
-                        <Button
-                            onPress={() => navigation.navigate('Agent')}
-                            title="注册"
-                            color="#fff"
-                        />
-                    </ImageBackground>
-        ),
-        headerStyle: {
-            backgroundColor:baseStyle.them.backgroundColor,
-            paddingEnd:10,
-        },
-        headerTintColor: '#fff',
-        headerTitleStyle: {
-            fontWeight: 'bold',
-        },
+    static navigationOptions =({navigation})=>{
+        return  {
+            headerTitle:<LogoTitle />,
+            headerLeft:<Homebutton/>,
+            headerRight:<HeaderRContainer name={navigation} />,
+            headerStyle: {
+                backgroundColor:baseStyle.them.backgroundColor,
+                paddingEnd:10,
+            },
+            headerTintColor: '#fff',
+            headerTitleStyle: {
+                fontWeight: 'bold',
+            },
+        }
     };
     render(): React.ReactNode {
         return (

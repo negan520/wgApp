@@ -3,7 +3,6 @@ let user = {};
 export function login(data,sta) {
     return dispatch => {
         dispatch({type: types.LOGIN_IN_DOING}); // 正在执行登录请求
-        console.log(data,sta,'chuanpu')
         if (sta===types.LOGIN_IN_DONE)
         {
             dispatch({type:types.LOGIN_IN_DONE,user:data});
