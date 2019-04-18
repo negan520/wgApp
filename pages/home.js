@@ -3,7 +3,7 @@ import {Text,View,Button,Image,ImageBackground,StyleSheet,FlatList,ScrollView,As
 import Swiper from 'react-native-swiper';
 import { Container, Header, Tab, Tabs, TabHeading, Icon} from 'native-base';
 import {getInfo,getSwiper,getGameList,getChildGameList} from '../serve/getData';
-import {imageUrl} from "../serve/getData";
+import {imageUrl,signOut} from "../serve/getData";
 import {baseStyle} from "../style/base";
 import {domain} from "../config/api";
 import {connect} from 'react-redux';
@@ -29,10 +29,21 @@ class Homebutton extends React.Component {
     }
 }class HeaderR extends React.Component {
     componentDidUpdate(){
-        console.log(this.props.name,'sdf')
+
+    }
+    userLoginOut(){
+        signOut().then((res)=>{
+            if (res.Code=='SessionNotExist')
+            {
+                AsyncStorage.setItem('user',JSON.stringify({}));
+                AsyncStorage.setItem('userToken','');
+                this.props.isLogin('');
+            }
+            console.log(res,'ttt')
+        })
     }
     render() {
-        return this.props.isSuccess?(
+        return !this.props.isSuccess?(
             <ImageBackground source={require('../images/header_login_regiter.png')} style={{flex: 1,
                 justifyContent: 'space-around',
                 flexDirection: 'row',
@@ -46,14 +57,14 @@ class Homebutton extends React.Component {
                     color="#fff"
                 />
                 <Button
-                    onPress={() => navigation.navigate('Agent')}
+                    onPress={() => this.props.name.navigate('Agent')}
                     title="注册"
                     color="#fff"
                 />
             </ImageBackground>
         ):(<View>
             <Button
-                onPress={() => navigation.navigate('Agent')}
+                onPress={() => this.userLoginOut()}
                 title="退出"
                 color="#fff"
             />
@@ -65,6 +76,8 @@ let HeaderRContainer = connect((state) => ({
     status: state.loginIn.status,
     isSuccess: state.loginIn.isSuccess,
     user: state.loginIn.user,
+}),(dispatch) => ({
+    isLogin: (user) => dispatch(isLogin(user)),
 }))(HeaderR);
  class HomeScreen extends Component{
     constructor(props){
@@ -80,12 +93,20 @@ let HeaderRContainer = connect((state) => ({
             this.setState({tabIndex:index})
         }
     }
+    userLoginOut(){
+        signOut().then(function (res) {
+            console.log(res,'ttt')
+        })
+    }
     componentDidMount(): void {
-        AsyncStorage.getItem('user').then(function (res) {
-            let data=JSON.parse(res);
+        AsyncStorage.getItem('userToken').then((res)=>{
+            let data=res;
             if (data)
             {
-                _this.props.login(data,'LOGIN_IN_DONE');
+                this.props.login(data,'LOGIN_IN_DONE');
+            }
+            else {
+                this.props.isLogin('');
             }
         })
         getInfo().then(function (res) {//获取基本信息
@@ -214,14 +235,10 @@ let HeaderRContainer = connect((state) => ({
                         <Tab heading="彩票" activeTextStyle={{color:styles.gameTabStyle.color}} activeTabStyle={{backgroundColor:baseStyle.acyive(true)}} textStyle={{color:styles.gameTabStyle.color}} tabStyle={styles.gameTabStyle}>
                             <View>
                                 <View style={{width: 50, height: 50, backgroundColor: 'powderblue'}}>
-                                    <Button
-                                        onPress={this.props.login}
-                                        title="登录"
-                                        color="#fff"
-                                    />
+
                                 </View>
                                 <View style={{width: 100, height: 100, backgroundColor: 'skyblue'}}>
-                                    <Text>{this.props.status}</Text>
+
                                 </View>
                                 <View style={{width: 150, height: 150, backgroundColor: 'steelblue'}} />
                             </View>

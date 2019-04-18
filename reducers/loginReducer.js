@@ -35,7 +35,14 @@ export default function loginIn(state=initialState, action) {
                 user: null,
             };
             break;
-
+        case types.NOT_LOGIN:
+            return {
+                ...state,
+                status: '未登录',
+                isSuccess: false,
+                user: null,
+            };
+            break;
         default:
             return state;
     }

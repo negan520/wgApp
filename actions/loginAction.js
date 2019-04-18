@@ -9,13 +9,14 @@ export function login(data,sta) {
         }
     }
 }
-export function isLogin(user) {
+export function isLogin(user) {//判断是否登录
     return dispatch=>{
-        console.log('rrr',user)
         if(user)
         {
-            console.log('eee')
             dispatch({type:types.LOGIN_IN_DONE,user:user})
+        }
+        else {
+            dispatch({type:types.NOT_LOGIN,user:{}})
         }
     }
 }

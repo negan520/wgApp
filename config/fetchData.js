@@ -1,4 +1,5 @@
 import {domain} from './api';
+import {AsyncStorage} from 'react-native'
 const headers = new Headers({
     'Accept': 'application/json',
     'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
@@ -29,7 +30,26 @@ function post (url, data) {
         return {error: {message: 'Request failed.'}};
     })
 }
-
+ let fectPost =async(url,data)=>{
+     const userToken = await AsyncStorage.getItem('userToken');
+     let headers = new Headers({
+         'Accept': 'application/json',
+         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+         'Cookie':'zz='+userToken,
+         'credentials': 'include'
+     });
+     console.log(headers,'uiui');
+     return fetch(domain+url, {
+         method: 'POST',
+         headers: headers,
+         body:data
+     }).then(response => {
+         return handleResponse(domain+url, response);
+     }).catch(err => {
+         console.error(`Request failed. Url = ${url} . Message = ${err}`);
+         return {error: {message: 'Request failed.'}};
+     })
+}
 function put (url, data) {
     return fetch(data+url, {
         method: 'PUT',
@@ -51,4 +71,4 @@ function handleResponse (url, response) {
         return {error: {message: 'Request failed due to server error '}};
     }
 }
-export {get, post, put}
+export {get, post, put,fectPost}
