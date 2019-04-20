@@ -30,15 +30,7 @@ function post (url, data) {
         return {error: {message: 'Request failed.'}};
     })
 }
- let fectPost =async(url,data)=>{
-     const userToken = await AsyncStorage.getItem('userToken');
-     let headers = new Headers({
-         'Accept': 'application/json',
-         'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
-         'Cookie':'zz='+userToken,
-         'credentials': 'include'
-     });
-     console.log(headers,'uiui');
+function fectPost(url,data){
      return fetch(domain+url, {
          method: 'POST',
          headers: headers,

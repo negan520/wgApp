@@ -19,7 +19,6 @@ import {connect} from "react-redux";
 import {isLogin, login} from "../actions/loginAction";
 import {baseStyle} from "../style/base";
 import {signIn} from "../serve/getData";
-
 class SignIn extends Component {
     constructor(props) {
         super(props);
@@ -58,7 +57,7 @@ class SignIn extends Component {
                 this.props.login(res.Data, 'LOGIN_IN_DONE');
                 this.props.navigation.navigate('Home');
                 AsyncStorage.setItem('user', JSON.stringify(res.Data));
-                AsyncStorage.setItem('userToken', JSON.stringify(res.Data.SessionId));
+                AsyncStorage.setItem('zz', res.Data.SessionId);
             } else {
                 Toast.show({
                     text: res.Code,
@@ -119,7 +118,7 @@ class SignIn extends Component {
                             }
                         </Item>
                         <View style={{flex: 1, marginTop: 10, padding: 20}}>
-                            <Button full style={{backgroundColor: '#a56001', borderRadius: 5}}
+                            <Button full style={baseStyle.buttonSubymit}
                                     onPress={() => this.loginSubymit()}>
                                 <Text style={{color: baseStyle.colorWite.color, fontSize: 16}}>立即登录</Text>
                             </Button>

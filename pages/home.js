@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import {Text, View, Button, Image, ImageBackground, StyleSheet, FlatList, ScrollView, AsyncStorage} from 'react-native';
+import {Text, View, Image, ImageBackground, StyleSheet, FlatList, ScrollView, AsyncStorage} from 'react-native';
 import Swiper from 'react-native-swiper';
-import {Container, Header, Tab, Tabs, TabHeading, Icon} from 'native-base';
+import {Container, Header, Tab, Tabs, TabHeading, Icon,Button} from 'native-base';
 import {getInfo, getSwiper, getGameList, getChildGameList} from '../serve/getData';
 import {imageUrl, signOut} from "../serve/getData";
 import {baseStyle} from "../style/base";
@@ -41,10 +41,9 @@ class HeaderR extends React.Component {
         signOut().then((res) => {
             if (res.Code == 'SessionNotExist') {
                 AsyncStorage.setItem('user', JSON.stringify({}));
-                AsyncStorage.setItem('userToken', '');
+                AsyncStorage.setItem('zz', '');
                 this.props.isLogin('');
             }
-            console.log(res, 'ttt')
         })
     }
 
@@ -54,20 +53,18 @@ class HeaderR extends React.Component {
                 flex: 1,
                 justifyContent: 'space-around',
                 flexDirection: 'row',
-                height: 30,
+                height:22,
+                paddingTop:0,
+                borderRadius:5,
                 alignItems: 'flex-start',
                 width: 83,
             }}>
-                <Button
-                    onPress={() => this.props.name.navigate('signIn')}
-                    title="登录"
-                    color="#fff"
-                />
-                <Button
-                    onPress={() => this.props.name.navigate('Agent')}
-                    title="注册"
-                    color="#fff"
-                />
+                <Button onPress={() => this.props.name.navigate('signIn')} transparent warning style={baseStyle.loginButton}>
+                    <Text style={{color:'#fff'}}>登录</Text>
+                </Button>
+                <Button onPress={() => this.props.name.navigate('Agent')} transparent warning style={baseStyle.loginButton}>
+                    <Text style={{color:'#fff'}}>注册</Text>
+                </Button>
             </ImageBackground>
         ) : (<View>
             <Button
@@ -95,7 +92,8 @@ class HomeScreen extends Component {
             swipers: [],
             gameList: null,
             gameChild: [],
-            tabIndex: 0
+            tabIndex: 0,
+            merhcantInfo:''
         };
         this.changgeTab = (index) => {
             this.setState({tabIndex: index})
@@ -104,7 +102,7 @@ class HomeScreen extends Component {
 
     userLoginOut() {
         signOut().then(function (res) {
-            console.log(res, 'ttt')
+
         })
     }
 
@@ -117,8 +115,8 @@ class HomeScreen extends Component {
                 this.props.isLogin('');
             }
         })
-        getInfo().then(function (res) {//获取基本信息
-
+        getInfo().then(res=> {//获取基本信息
+             this.setState({merhcantInfo:res.Data})
         });
         getSwiper(2).then(res => {//获取轮播图
             this.setState({swipers: res.Data})
@@ -199,6 +197,9 @@ class HomeScreen extends Component {
     render(): React.ReactNode {
         return (
             <ScrollView style={{backgroundColor: '#101d3d'}}>
+                <Text style={baseStyle.domaiText}>
+                     主页域名:{this.state.merhcantInfo.BaseInfo.LastingDomain}
+                </Text>
                 <View style={{width: '100%', height: 120, backgroundColor: baseStyle.mainBackground.backgroundColor}}>
                     {
                         this.state.swipers.length ? (<Swiper autoplay={true} style={styles.wrapper}>

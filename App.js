@@ -11,8 +11,9 @@ import HomeScreen from './pages/home';
 import Activity from './pages/Activity';
 import User from './pages/user';
 import Agent from './pages/agent';
-import signIn from './pages/signIn'
-import {Icon, Button, Container} from 'native-base';
+import signIn from './pages/signIn';
+import Register from './pages/register';
+import { Button, Container,ListItem,Left,Body,Right,Icon} from 'native-base';
 import {baseStyle} from "./style/base";
 
 const HomeStack = createStackNavigator({
@@ -36,7 +37,7 @@ const CustomDrawerContentComponent = props => (
                 <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-around'}}>
                     <View style={{width: 68, height: 33}}>
                         <Button warning style={{height: 33, width: 68, justifyContent: 'center'}}
-                                onPress={() => props.navigation.navigate('signIn')}><Text
+                                onPress={() => props.navigation.navigate('Register')}><Text
                             style={{color: '#fff'}}>注册</Text></Button>
                     </View>
                     <View style={{width: 68, height: 33}}>
@@ -46,8 +47,116 @@ const CustomDrawerContentComponent = props => (
                     </View>
                 </View>
             </View>
-            <View style={{flex: 1}}>
-                <DrawerItems {...props} />
+            <View style={{flex: 1,paddingRight:10}}>
+                <ListItem icon onPress={()=>{props.navigation.navigate('Register')}}>
+                    <Left>
+                        <Button style={{ backgroundColor: "#007AFF" }}>
+                            <Icon active name="wifi" />
+                        </Button>
+                    </Left>
+                    <Body style={baseStyle.menusItem}>
+                    <Text style={{color:baseStyle.colorWite.color}}>VIP俱乐部</Text>
+                    </Body>
+                    <Right style={baseStyle.menusItemCon}>
+                        <Icon active name="arrow-forward" />
+                    </Right>
+                </ListItem>
+                <ListItem icon onPress={()=>{props.navigation.navigate('Register')}}>
+                    <Left>
+                        <Button style={{ backgroundColor: "#007AFF" }}>
+                            <Icon active name="wifi" />
+                        </Button>
+                    </Left>
+                    <Body style={baseStyle.menusItem}>
+                    <Text style={{color:baseStyle.colorWite.color}}>优惠活动</Text>
+                    </Body>
+                    <Right style={baseStyle.menusItemCon}>
+                        <Icon active name="arrow-forward" />
+                    </Right>
+                </ListItem>
+                <ListItem icon onPress={()=>{props.navigation.navigate('Register')}}>
+                    <Left>
+                        <Button style={{ backgroundColor: "#007AFF" }}>
+                            <Icon active name="wifi" />
+                        </Button>
+                    </Left>
+                    <Body style={baseStyle.menusItem}>
+                    <Text style={{color:baseStyle.colorWite.color}}>代理中心</Text>
+                    </Body>
+                    <Right style={baseStyle.menusItemCon}>
+                        <Icon active name="arrow-forward" />
+                    </Right>
+                </ListItem>
+                <ListItem icon onPress={()=>{props.navigation.navigate('Register')}}>
+                    <Left>
+                        <Button style={{ backgroundColor: "#007AFF" }}>
+                            <Icon active name="wifi" />
+                        </Button>
+                    </Left>
+                    <Body style={baseStyle.menusItem}>
+                    <Text style={{color:baseStyle.colorWite.color}}>安全中心</Text>
+                    </Body>
+                    <Right style={baseStyle.menusItemCon}>
+                        <Icon active name="arrow-forward" />
+                    </Right>
+                </ListItem>
+                <ListItem icon onPress={()=>{props.navigation.navigate('Register')}}>
+                    <Left>
+                        <Button style={{ backgroundColor: "#007AFF" }}>
+                            <Icon active name="wifi" />
+                        </Button>
+                    </Left>
+                    <Body style={baseStyle.menusItem}>
+                    <Text style={{color:baseStyle.colorWite.color}}>会员中心</Text>
+                    </Body>
+                    <Right style={baseStyle.menusItemCon}>
+                        <Icon active name="arrow-forward" />
+                    </Right>
+                </ListItem>
+                <ListItem icon onPress={()=>{props.navigation.navigate('Register')}}>
+                    <Left>
+                        <Button style={{ backgroundColor: "#007AFF" }}>
+                            <Icon active name="wifi" />
+                        </Button>
+                    </Left>
+                    <Body style={baseStyle.menusItem}>
+                    <Text style={{color:baseStyle.colorWite.color}}>在线客服</Text>
+                    </Body>
+                    <Right style={baseStyle.menusItemCon}>
+                        <Icon active name="arrow-forward" />
+                    </Right>
+                </ListItem>
+                <ListItem icon onPress={()=>{props.navigation.navigate('Register')}}>
+                    <Left>
+                        <Button style={{ backgroundColor: "#007AFF" }}>
+                            <Icon active name="wifi" />
+                        </Button>
+                    </Left>
+                    <Body style={baseStyle.menusItem}>
+                    <Text style={{color:baseStyle.colorWite.color}}>APP下载</Text>
+                    </Body>
+                    <Right style={baseStyle.menusItemCon}>
+                        <Icon active name="arrow-forward" />
+                    </Right>
+                </ListItem>
+                <ListItem icon onPress={()=>{props.navigation.navigate('Register')}}>
+                    <Left>
+                        <Button style={{ backgroundColor: "#007AFF" }}>
+                            <Icon active name="wifi" />
+                        </Button>
+                    </Left>
+                    <Body style={baseStyle.menusItem}>
+                    <Text style={{color:baseStyle.colorWite.color}}>电脑版</Text>
+                    </Body>
+                    <Right style={baseStyle.menusItemCon}>
+                        <Icon active name="arrow-forward" />
+                    </Right>
+                </ListItem>
+                <View style={{paddingLeft:20,paddingRight:10,paddingTop:20}}>
+                    <Button full warning style={baseStyle.buttonSubymit}>
+                        <Text style={{color:'#fff'}}>免费试玩</Text>
+                    </Button>
+                </View>
             </View>
         </SafeAreaView>
     </ScrollView>
@@ -119,6 +228,16 @@ const MyDrawerNavigator = createDrawerNavigator({
                 title: `会员中心`,
             }),
         },
+        signIn: {
+            screen: signIn,
+            title: '登录',
+            headerTitle:'登录'
+        },
+        Register: {
+            screen: Register,
+            title: '注册',
+            headerTitle:'注册'
+        },
         Agent: {
             screen: Agent,
             navigationOptions: () => ({
@@ -127,10 +246,10 @@ const MyDrawerNavigator = createDrawerNavigator({
         }
     },
     {
-        drawerBackgroundColor: baseStyle.them.backgroundColor,
+        drawerBackgroundColor: baseStyle.mainBackground.backgroundColor,
         contentOptions: {
             activeTintColor: baseStyle.acyive(true),
-            inactiveTintColor: '#fff'
+            inactiveTintColor: '#fff',
         },
         contentComponent: CustomDrawerContentComponent,//自定义侧边栏组件
         drawerType: 'slide',
