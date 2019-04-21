@@ -8,12 +8,15 @@
     "lint": "eslint ."
   },
   "dependencies": {
+    "@remobile/react-native-marquee": "^1.0.1",
     "native-base": "^2.12.1",
     "react": "16.8.3",
     "react-native": "0.59.2",
     "react-native-cookiemanager": "^0.2.0",
     "react-native-cookies": "^3.3.0",
+    "react-native-fit-image": "^1.5.4",
     "react-native-gesture-handler": "^1.1.0",
+    "react-native-lahk-marquee-label": "^1.1.4",
     "react-native-swiper": "^1.5.14",
     "react-navigation": "^3.6.1",
     "react-redux": "^7.0.1",

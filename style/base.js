@@ -23,6 +23,11 @@ export const baseStyle=StyleSheet.create({
    mainBackground:{
        backgroundColor:'#101d3d'
    },
+   loginContainer:{
+       textAlign:'center',
+       backgroundColor:'#101d3d',
+       justifyContent:'center'
+   },
    headerStyle:{
        backgroundColor:'#000543',
        color:'#fff'

@@ -19,6 +19,8 @@ import {connect} from "react-redux";
 import {isLogin, login} from "../actions/loginAction";
 import {baseStyle} from "../style/base";
 import {signIn} from "../serve/getData";
+import {Dimensions} from "react-native"
+import Img from '../component/Img';
 class SignIn extends Component {
     constructor(props) {
         super(props);
@@ -26,10 +28,17 @@ class SignIn extends Component {
             userName: '',
             passWord: '',
             showToast: false,
-            loading: false
+            loading: false,
+            imw:'',
+            imh:30
         }
     }
-
+    componentWillMount(){
+        let screenWidth = Dimensions.get('window').width;
+        Image.getSize('https://image.hnidb.cn/sr/picture/logo/201901080942121976544636.png',(width,height) => {
+            this.setState({imw:width,imh:(screenWidth*0.8/width)*height})
+        })
+    }
     loginSubymit = () => {//登录提交
         if (!this.state.userName || !/^[0-9a-zA-Z]*$/.test(this.state.userName)) {
             Toast.show({
@@ -74,7 +83,7 @@ class SignIn extends Component {
 
     render() {
         return (
-            <Container style={baseStyle.mainBackground}>
+            <Container style={baseStyle.loginContainer}>
                 <Header style={baseStyle.headerStyle}>
                     <Left>
                         <Button transparent onPress={() => this.props.navigation.goBack()}>
@@ -86,10 +95,7 @@ class SignIn extends Component {
                     </Body>
                     <Right/>
                 </Header>
-                <Image
-                    style={{width: 'auto', height: 90, marginTop: 10}}
-                    source={{uri: 'https://image.hnidb.cn/sr/picture/logo/201901080942121976544636.png'}}
-                />
+                <Img source={{uri:'https://image.hnidb.cn/sr/picture/logo/201901080942121976544636.png'}} style={{ marginTop: 30,marginLeft:'10%',marginBottom:30}} width={'80%'} height={'auto'}/>
                 <Content style={{paddingLeft: 10, paddingRight: 15}}>
                     <Form>
                         <Item error={!/^[0-9a-zA-Z]*$/.test(this.state.userName)}>

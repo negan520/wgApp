@@ -13,9 +13,9 @@ import User from './pages/user';
 import Agent from './pages/agent';
 import signIn from './pages/signIn';
 import Register from './pages/register';
-import { Button, Container,ListItem,Left,Body,Right,Icon} from 'native-base';
+import { Button, Container,ListItem,Left,Body,Right} from 'native-base';
 import {baseStyle} from "./style/base";
-
+import Icon from 'react-native-vector-icons/FontAwesome5';
 const HomeStack = createStackNavigator({
     Home: HomeScreen
 });
@@ -50,106 +50,90 @@ const CustomDrawerContentComponent = props => (
             <View style={{flex: 1,paddingRight:10}}>
                 <ListItem icon onPress={()=>{props.navigation.navigate('Register')}}>
                     <Left>
-                        <Button style={{ backgroundColor: "#007AFF" }}>
-                            <Icon active name="wifi" />
-                        </Button>
+                            <Icon name="crown" size={18} color='#fff'/>
                     </Left>
                     <Body style={baseStyle.menusItem}>
                     <Text style={{color:baseStyle.colorWite.color}}>VIP俱乐部</Text>
                     </Body>
                     <Right style={baseStyle.menusItemCon}>
-                        <Icon active name="arrow-forward" />
+                        <Icon name="angle-right" size={22} color='#fff'/>
                     </Right>
                 </ListItem>
                 <ListItem icon onPress={()=>{props.navigation.navigate('Register')}}>
                     <Left>
-                        <Button style={{ backgroundColor: "#007AFF" }}>
-                            <Icon active name="wifi" />
-                        </Button>
+                        <Icon name="gift" size={25} color='#fff'/>
                     </Left>
                     <Body style={baseStyle.menusItem}>
                     <Text style={{color:baseStyle.colorWite.color}}>优惠活动</Text>
                     </Body>
                     <Right style={baseStyle.menusItemCon}>
-                        <Icon active name="arrow-forward" />
+                        <Icon name="angle-right" size={25} color='#fff'/>
                     </Right>
                 </ListItem>
                 <ListItem icon onPress={()=>{props.navigation.navigate('Register')}}>
                     <Left>
-                        <Button style={{ backgroundColor: "#007AFF" }}>
-                            <Icon active name="wifi" />
-                        </Button>
+                        <Icon name="user-md" size={25} color='#fff'/>
                     </Left>
                     <Body style={baseStyle.menusItem}>
                     <Text style={{color:baseStyle.colorWite.color}}>代理中心</Text>
                     </Body>
                     <Right style={baseStyle.menusItemCon}>
-                        <Icon active name="arrow-forward" />
+                        <Icon name="angle-right" size={25} color='#fff'/>
                     </Right>
                 </ListItem>
                 <ListItem icon onPress={()=>{props.navigation.navigate('Register')}}>
                     <Left>
-                        <Button style={{ backgroundColor: "#007AFF" }}>
-                            <Icon active name="wifi" />
-                        </Button>
+                        <Icon name="universal-access" size={25} color='#fff'/>
                     </Left>
                     <Body style={baseStyle.menusItem}>
                     <Text style={{color:baseStyle.colorWite.color}}>安全中心</Text>
                     </Body>
                     <Right style={baseStyle.menusItemCon}>
-                        <Icon active name="arrow-forward" />
+                        <Icon name="angle-right" size={25} color='#fff'/>
                     </Right>
                 </ListItem>
                 <ListItem icon onPress={()=>{props.navigation.navigate('Register')}}>
                     <Left>
-                        <Button style={{ backgroundColor: "#007AFF" }}>
-                            <Icon active name="wifi" />
-                        </Button>
+                        <Icon name="user-circle" size={25} color='#fff'/>
                     </Left>
                     <Body style={baseStyle.menusItem}>
                     <Text style={{color:baseStyle.colorWite.color}}>会员中心</Text>
                     </Body>
                     <Right style={baseStyle.menusItemCon}>
-                        <Icon active name="arrow-forward" />
+                        <Icon name="angle-right" size={25} color='#fff'/>
                     </Right>
                 </ListItem>
                 <ListItem icon onPress={()=>{props.navigation.navigate('Register')}}>
                     <Left>
-                        <Button style={{ backgroundColor: "#007AFF" }}>
-                            <Icon active name="wifi" />
-                        </Button>
+                        <Icon name="comments-o" size={20} color='#fff'/>
                     </Left>
                     <Body style={baseStyle.menusItem}>
                     <Text style={{color:baseStyle.colorWite.color}}>在线客服</Text>
                     </Body>
                     <Right style={baseStyle.menusItemCon}>
-                        <Icon active name="arrow-forward" />
+                        <Icon name="angle-right" size={25} color='#fff'/>
                     </Right>
                 </ListItem>
                 <ListItem icon onPress={()=>{props.navigation.navigate('Register')}}>
                     <Left>
-                        <Button style={{ backgroundColor: "#007AFF" }}>
-                            <Icon active name="wifi" />
-                        </Button>
+                        <Icon name="arrow-down" size={25} color='#fff'/>
                     </Left>
                     <Body style={baseStyle.menusItem}>
                     <Text style={{color:baseStyle.colorWite.color}}>APP下载</Text>
                     </Body>
                     <Right style={baseStyle.menusItemCon}>
-                        <Icon active name="arrow-forward" />
+                        <Icon name="angle-right" size={25} color='#fff'/>
                     </Right>
                 </ListItem>
                 <ListItem icon onPress={()=>{props.navigation.navigate('Register')}}>
                     <Left>
-                        <Button style={{ backgroundColor: "#007AFF" }}>
-                            <Icon active name="wifi" />
-                        </Button>
+                        <Icon name="laptop" size={18} color='#fff'/>
                     </Left>
                     <Body style={baseStyle.menusItem}>
                     <Text style={{color:baseStyle.colorWite.color}}>电脑版</Text>
                     </Body>
                     <Right style={baseStyle.menusItemCon}>
-                        <Icon active name="arrow-forward" />
+                        <Icon name="angle-right" size={25} color='#fff'/>
                     </Right>
                 </ListItem>
                 <View style={{paddingLeft:20,paddingRight:10,paddingTop:20}}>
@@ -168,7 +152,7 @@ const Hometab = createBottomTabNavigator({
                 title: `首页`,
                 tabBarIcon: ({tintColor, focused}) => (
                     <Icon
-                        name='home' style={{color: baseStyle.acyive(focused)}}
+                        name='home' size={20} color={baseStyle.acyive(focused)}
                     />
                 ),
             }),
@@ -179,7 +163,7 @@ const Hometab = createBottomTabNavigator({
                 title: `活动`,
                 tabBarIcon: ({tintColor, focused}) => (
                     <Icon
-                        name='logo-apple' style={{color: baseStyle.acyive(focused)}}
+                        name='gift' size={20} color={baseStyle.acyive(focused)}
                     />
                 ),
             }),
@@ -190,7 +174,7 @@ const Hometab = createBottomTabNavigator({
                 title: `我的`,
                 tabBarIcon: ({tintColor, focused}) => (
                     <Icon
-                        name='person' style={{color: baseStyle.acyive(focused)}}
+                        name='user' size={20} color={baseStyle.acyive(focused)}
                     />
                 ),
             }),

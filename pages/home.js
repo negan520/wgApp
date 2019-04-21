@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
 import {Text, View, Image, ImageBackground, StyleSheet, FlatList, ScrollView, AsyncStorage} from 'react-native';
 import Swiper from 'react-native-swiper';
-import {Container, Header, Tab, Tabs, TabHeading, Icon,Button} from 'native-base';
+import {Container, Header, Tab, Tabs, TabHeading,Button} from 'native-base';
 import {getInfo, getSwiper, getGameList, getChildGameList} from '../serve/getData';
 import {imageUrl, signOut} from "../serve/getData";
 import {baseStyle} from "../style/base";
 import {domain} from "../config/api";
 import {connect} from 'react-redux';
 import {login, isLogin} from '../actions/loginAction';
-
+import MarqueeLabel from 'react-native-lahk-marquee-label';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 class LogoTitle extends React.Component {
     render() {
         return (
@@ -26,8 +27,8 @@ class Homebutton extends React.Component {
 
     render() {
         return (
-            <Icon ios='ios-menu' onPress={() => _this.props.navigation.openDrawer()} android="md-menu"
-                  style={{fontSize: 30, color: '#fff', marginLeft: 10}}/>
+            <Icon name='list-ul' onPress={() => _this.props.navigation.openDrawer()}
+                  size={30} color="#fff"  style={{marginLeft:10}}/>
         );
     }
 }
@@ -93,7 +94,8 @@ class HomeScreen extends Component {
             gameList: null,
             gameChild: [],
             tabIndex: 0,
-            merhcantInfo:''
+            merhcantInfo:'',
+            lastingDomai:''
         };
         this.changgeTab = (index) => {
             this.setState({tabIndex: index})
@@ -105,7 +107,12 @@ class HomeScreen extends Component {
 
         })
     }
-
+    componentWillMount(){
+        getInfo().then(res=> {//获取基本信息
+            this.setState({lastingDomai:res.Data.BaseInfo.LastingDomain});
+            this.setState({merhcantInfo:res.Data})
+        });
+    }
     componentDidMount(): void {
         AsyncStorage.getItem('userToken').then((res) => {
             let data = res;
@@ -115,9 +122,6 @@ class HomeScreen extends Component {
                 this.props.isLogin('');
             }
         })
-        getInfo().then(res=> {//获取基本信息
-             this.setState({merhcantInfo:res.Data})
-        });
         getSwiper(2).then(res => {//获取轮播图
             this.setState({swipers: res.Data})
         })
@@ -198,7 +202,7 @@ class HomeScreen extends Component {
         return (
             <ScrollView style={{backgroundColor: '#101d3d'}}>
                 <Text style={baseStyle.domaiText}>
-                     主页域名:{this.state.merhcantInfo.BaseInfo.LastingDomain}
+                     主页域名:{this.state.lastingDomai}
                 </Text>
                 <View style={{width: '100%', height: 120, backgroundColor: baseStyle.mainBackground.backgroundColor}}>
                     {
@@ -213,6 +217,19 @@ class HomeScreen extends Component {
                             }
                         </Swiper>) : (<View/>)
                     }
+                </View>
+                <View style={{flex:1,flexDirection: 'row',height:28}}>
+                    <View style={{width:32,height:28,lineHeight:28,marginLeft:5}}>
+                        <Icon name="volume-up" size={25} color="#4F8EF7" />
+                    </View>
+                    <View style={{flex:1,}}>
+                        <MarqueeLabel
+                            speed={50}
+                            textStyle={{fontSize: 13, color: 'white' }}
+                        >
+                            This is a Marquee Label.
+                        </MarqueeLabel>
+                    </View>
                 </View>
                 <Tabs onChangeTab={(item) => this.setState({tabIndex: item.i})}>
                     <Tab heading="棋牌" activeTextStyle={{color: styles.gameTabStyle.color}}
