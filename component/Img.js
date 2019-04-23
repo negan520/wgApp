@@ -19,7 +19,7 @@ export default class Img extends Component{
         Image.getSize(this.props.source.uri,(width,height) => {
             if (this.props.height=='auto')//设置宽度高度自适应
             {
-                if (typeof this.props.height=='string')
+                if (typeof this.props.width=='string')
                 {
                     this.setState({width:this.props.width,height:(screenWidth*this.toPoint(this.props.width)/width)*height})
                 }
@@ -29,7 +29,7 @@ export default class Img extends Component{
             }
             else if (this.props.width=='auto')//设置高度宽度自适应
             {
-                if (typeof this.props.width=='string')
+                if (typeof this.props.height=='string')
                 {
                     this.setState({width:(screenHight*this.toPoint(this.props.height)/height)*width,height:this.props.height})
                 }

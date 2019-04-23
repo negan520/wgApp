@@ -10,6 +10,9 @@ export const baseStyle=StyleSheet.create({
        }
        return '#fff'
    },
+    main:{
+        backgroundColor:'#101d3d'
+    },
    loginButton:{
        height:22,paddingTop:0,paddingBottom:0
    },
@@ -44,5 +47,18 @@ export const baseStyle=StyleSheet.create({
     },
     buttonSubymit:{
         backgroundColor: '#a56001', borderRadius: 5
+    },
+    activiList:{
+        borderWidth:1,height:180,borderStyle:'solid',alignItems:'center',borderColor:'#b37a00'
+    },
+    activiListSet:{
+        flex:1,width:'100%',padding:5,flexDirection:'row',justifyContent:'space-between',paddingBottom:0
+    },
+    activiButton:{
+       width:100,
+        height:34,
+        justifyContent:'center',
+        paddingTop: 0,
+        paddingBottom: 0
     }
 });

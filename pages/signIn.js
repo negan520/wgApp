@@ -7,7 +7,6 @@ import {
     Body,
     Right,
     Button,
-    Icon,
     Title,
     Content,
     Form,
@@ -21,6 +20,7 @@ import {baseStyle} from "../style/base";
 import {signIn} from "../serve/getData";
 import {Dimensions} from "react-native"
 import Img from '../component/Img';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 class SignIn extends Component {
     constructor(props) {
         super(props);
@@ -87,7 +87,7 @@ class SignIn extends Component {
                 <Header style={baseStyle.headerStyle}>
                     <Left>
                         <Button transparent onPress={() => this.props.navigation.goBack()}>
-                            <Icon name='arrow-back'/>
+                            <Icon name='chevron-left' size={26} color={baseStyle.colorWite.color}/>
                         </Button>
                     </Left>
                     <Body>
