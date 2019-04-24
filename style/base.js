@@ -48,6 +48,9 @@ export const baseStyle=StyleSheet.create({
     buttonSubymit:{
         backgroundColor: '#a56001', borderRadius: 5
     },
+    activiNation:{//活动导航
+       flex: 1,flexDirection:'row',justifyContent:'space-evenly',height:41,marginTop:10,alignItems:'center'
+    },
     activiList:{
         borderWidth:1,height:180,borderStyle:'solid',alignItems:'center',borderColor:'#b37a00'
     },
@@ -60,5 +63,34 @@ export const baseStyle=StyleSheet.create({
         justifyContent:'center',
         paddingTop: 0,
         paddingBottom: 0
+    },
+    userInfo:{
+        flex:1,
+        alignItems:'center',
+        justifyContent:'center',
+        marginTop: 10
+    },
+    lockViptx:{
+       color:'#ffa700',
+       textAlign:'center',
+       lineHeight:25
+    },
+    lockVipbt:{
+       width:73,height:25,backgroundColor:'#ca9c00',justifyContent:'center',marginLeft:5
+    },
+    lockVipbttx:{
+       color:'#fff',
+       textAlign:'center'
+    },
+    vipMoneybt:{
+       height:36,paddingTop:0,paddingBottom:0,justifyContent:'center',color:'#fff',alignItems:'center'
+    },
+    userInfoLink:{
+       width:'33.333%',
+        justifyContent:'center',alignItems:'center',marginBottom:40
+    },
+    userInfoLinkContain:{
+       width:60,
+        height:60
     }
 });
