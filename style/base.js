@@ -16,6 +16,24 @@ export const baseStyle=StyleSheet.create({
    loginButton:{
        height:22,paddingTop:0,paddingBottom:0
    },
+    marLeft10:{
+       marginLeft:10
+    },
+    marLeft115:{
+        marginLeft:15
+    },
+    marLeft20:{
+        marginLeft:20
+    },
+    marRight10:{
+       marginRight:10
+    },
+    marRight15:{
+        marginRight:15
+    },
+    marRight20:{
+        marginRight:20
+    },
    domaiText:{
        height: 20,
        color:'#fff',
@@ -23,6 +41,21 @@ export const baseStyle=StyleSheet.create({
        backgroundColor:'#2b338a',
        lineHeight:20
    },
+    greenColor:{
+       color:'#0cff00'
+    },
+    colorYellow:{
+       color:"#ffc900"
+    },
+    colorDanger:{
+       color:'#f53d3d'
+    },
+    borderBlue:{
+       borderColor:"#001579"
+    },
+    borderBottom:{
+       borderBottomWidth:1,borderStyle:'solid'
+    },
    mainBackground:{
        backgroundColor:'#101d3d'
    },
@@ -92,5 +125,18 @@ export const baseStyle=StyleSheet.create({
     userInfoLinkContain:{
        width:60,
         height:60
+    },
+    vipContain:{
+
+    },
+    vipListItem:{
+       flex:1,flexDirection:'row',justifyContent:'space-between',alignItems:"center",height:52
+    },
+    vipListItemTxleft:{
+        color:"#fff",marginLeft:20
+    },
+    vipclubBanner:{
+     flex:1,
+        width:'100%'
     }
 });

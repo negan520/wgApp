@@ -13,6 +13,8 @@ import User from './pages/user';
 import Agent from './pages/agent';
 import signIn from './pages/signIn';
 import Register from './pages/register';
+import Vip from './pages/vip';
+import vipClub from './pages/vipClub'
 import { Button, Container,ListItem,Left,Body,Right} from 'native-base';
 import {baseStyle} from "./style/base";
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -226,6 +228,18 @@ const MyDrawerNavigator = createDrawerNavigator({
             screen: Agent,
             navigationOptions: () => ({
                 title: `代理`,
+            }),
+        },
+        Vip: {
+            screen: Vip,
+            navigationOptions: () => ({
+                title: `VIP`,
+            }),
+        },
+        vipClub: {
+            screen: vipClub,
+            navigationOptions: () => ({
+                title: `VIP`,
             }),
         }
     },

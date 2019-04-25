@@ -1,5 +1,5 @@
 import React,{ Component } from 'react';
-import {Text, View, ScrollView, ImageBackground, Image} from 'react-native';
+import {Text, View, ScrollView, ImageBackground, Image,TouchableOpacity,Linking} from 'react-native';
 import {
     Container,
     Header,
@@ -12,7 +12,6 @@ import {
 } from 'native-base'
 import {baseStyle} from "../style/base";
 import {getActivity} from "../serve/getData";
-import Img from '../component/Img';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 export default class User extends Component{
     constructor(props) {
@@ -23,6 +22,9 @@ export default class User extends Component{
     }
     componentWillMount(){
 
+    }
+    _onPressButton(){
+        Linking.openURL('https://kingddownload.hnidb.cn/').catch(err => console.error('An error occurred', err));
     }
     render() {
         return (
@@ -100,46 +102,46 @@ export default class User extends Component{
                   </View>
                   <View style={{flex:1,flexDirection:"row",marginTop:10,justifyContent:"space-evenly",flexWrap:'wrap'}}>
                       <View style={baseStyle.userInfoLink}>
-                         <View style={baseStyle.userInfoLinkContain}>
+                          <TouchableOpacity style={baseStyle.userInfoLinkContain} onPress={()=>this.props.navigation.navigate('Activity')}>
                              <Image style={{width:60,height:60}}  source={require('../images/linkIcon-promotion.png')}/>
                              <Text style={{color:'#fff',textAlign:'center'}}>优惠活动</Text>
-                         </View>
+                          </TouchableOpacity>
                       </View>
                       <View style={baseStyle.userInfoLink}>
-                          <View style={baseStyle.userInfoLinkContain}>
+                          <TouchableOpacity style={baseStyle.userInfoLinkContain} onPress={()=>this.props.navigation.navigate('Vip')}>
                           <Image style={{width:60,height:60}}  source={require('../images/linkIcon-vip.png')} />
                           <Text style={{color:'#fff',textAlign:'center'}}>Vip特权</Text>
-                          </View>
+                          </TouchableOpacity>
                       </View>
                       <View style={baseStyle.userInfoLink}>
-                          <View style={baseStyle.userInfoLinkContain}>
+                          <TouchableOpacity style={baseStyle.userInfoLinkContain} onPress={this._onPressButton}>
                           <Image style={{width:60,height:60}}  source={require('../images/linkIcon-news.png')} />
                           <Text style={{color:'#fff',textAlign:'center'}}>消息中心</Text>
-                          </View>
+                          </TouchableOpacity>
                       </View>
                       <View style={baseStyle.userInfoLink}>
-                          <View style={baseStyle.userInfoLinkContain}>
+                          <TouchableOpacity style={baseStyle.userInfoLinkContain} onPress={this._onPressButton}>
                           <Image style={{width:60,height:60}}  source={require('../images/linkIcon-fundingRecordsl.png')}/>
                           <Text style={{color:'#fff',textAlign:'center'}}>资金记录</Text>
-                          </View>
+                          </TouchableOpacity>
                       </View>
                       <View style={baseStyle.userInfoLink}>
-                          <View style={baseStyle.userInfoLinkContain}>
+                          <TouchableOpacity style={baseStyle.userInfoLinkContain} onPress={this._onPressButton}>
                           <Image style={{width:60,height:60}}  source={require('../images/linkIcon-bettingRecord.png')} />
                           <Text style={{color:'#fff',textAlign:'center'}}>投注记录</Text>
-                          </View>
+                          </TouchableOpacity>
                       </View>
                       <View style={baseStyle.userInfoLink}>
-                          <View style={baseStyle.userInfoLinkContain}>
+                          <TouchableOpacity style={baseStyle.userInfoLinkContain} onPress={this._onPressButton}>
                           <Image style={{width:60,height:60}}  source={require('../images/linkIcon-registe.png')} />
                           <Text style={{color:'#fff',textAlign:'center'}}>代理中心</Text>
-                          </View>
+                          </TouchableOpacity>
                       </View>
                       <View style={baseStyle.userInfoLink}>
-                          <View style={baseStyle.userInfoLinkContain}>
+                          <TouchableOpacity style={baseStyle.userInfoLinkContain} onPress={this._onPressButton}>
                           <Image style={{width:60,height:60}}  source={require('../images/linkIcon-loginPasswordl.png')} />
                           <Text style={{color:'#fff',textAlign:'center'}}>安全中心</Text>
-                          </View>
+                          </TouchableOpacity>
                       </View>
                       <View style={baseStyle.userInfoLink}>
                           <View style={baseStyle.userInfoLinkContain}>
@@ -148,10 +150,10 @@ export default class User extends Component{
                           </View>
                       </View>
                       <View style={baseStyle.userInfoLink}>
-                          <View style={baseStyle.userInfoLinkContain}>
-                          <Image style={{width:60,height:60}}  source={require('../images/linkIcon-appDownload.png')} />
-                          <Text style={{color:'#fff',textAlign:'center'}}>APP下载</Text>
-                          </View>
+                          <TouchableOpacity style={baseStyle.userInfoLinkContain} onPress={this._onPressButton}>
+                              <Image style={{width:60,height:60}}  source={require('../images/linkIcon-appDownload.png')} />
+                              <Text style={{color:'#fff',textAlign:'center'}}>APP下载</Text>
+                          </TouchableOpacity>
                       </View>
                   </View>
                 </ScrollView>
