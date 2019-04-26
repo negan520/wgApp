@@ -256,7 +256,7 @@ const MyDrawerNavigator = createDrawerNavigator({
             activeTintColor: baseStyle.acyive(true),
             inactiveTintColor: '#fff',
         },
-        contentComponent: CustomDrawerContentComponent,//自定义侧边栏组件
+        contentComponent: CustomDrawerContentComponent,//自定义侧边栏
         drawerType: 'slide',
         defaultNavigationOptions: {
             headerStyle: {
