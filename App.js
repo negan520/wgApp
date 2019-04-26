@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{Component} from 'react';
 import {Text, View, ScrollView, SafeAreaView, Image} from 'react-native';
 import {
     createBottomTabNavigator,
@@ -15,12 +15,63 @@ import signIn from './pages/signIn';
 import Register from './pages/register';
 import Vip from './pages/vip';
 import vipClub from './pages/vipClub'
-import { Button, Container,ListItem,Left,Body,Right} from 'native-base';
+import { Button, Container,ListItem,Left,Body,Right,Footer,FooterTab} from 'native-base';
 import {baseStyle} from "./style/base";
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import {connect} from "react-redux";
+import {isLogin} from "./actions/loginAction";
 const HomeStack = createStackNavigator({
     Home: HomeScreen
 });
+export class FooterTobar extends Component {
+    render() {
+        return (
+            <Footer style={{backgroundColor: baseStyle.them.backgroundColor}}>
+                <FooterTab style={{paddingTop:10,height:60}}>
+                    <Button vertical onPress={()=>this.props.navigat.navigate('Home')}>
+                        <Icon
+                            name='home' size={26} color={this.props.navigat.state.index==0?'#36a6e5':'#fff'}
+                        />
+                        <Text style={{color:this.props.navigat.state.index==0?'#36a6e5':'#fff',marginTop:5}}>首页</Text>
+                    </Button>
+                    <Button vertical onPress={()=>this.props.navigat.navigate('Activity')}>
+                        <Icon
+                            name='gift' size={26} color={this.props.navigat.state.index==1?'#36a6e5':'#fff'}
+                        />
+                        <Text style={{color:this.props.navigat.state.index==1?'#36a6e5':'#fff',marginTop:5}}>活动</Text>
+                    </Button>
+                    <Button vertical onPress={()=>{console.log('ff',this.props.navigat.state.index)}}>
+                        <Icon
+                            name='handshake' size={26} color={this.props.navigat.state.index==4?'#36a6e5':'#fff'}
+                        />
+                        <Text style={{color:this.props.navigat.state.index==4?'#36a6e5':'#fff',marginTop:5}}>代理</Text>
+                    </Button>
+                    <Button vertical onPress={()=>{}}>
+                        <Icon
+                            name='weixin' size={32} color={this.props.navigat.state.index==5?'#36a6e5':'#fff'}
+                        />
+                        <Text style={{color:this.props.navigat.state.index==5?'#36a6e5':'#fff',marginTop:5}}>客服</Text>
+                    </Button>
+                    <Button vertical onPress={()=>this.props.navigat.navigate(this.props.isSuccess?'User':'signIn', {
+                        pageName:'User'
+                    })}>
+                        <Icon
+                            name='user' size={26} color={this.props.navigat.state.index==2?'#36a6e5':'#fff'}
+                        />
+                        <Text style={{color:this.props.navigat.state.index==2?'#36a6e5':'#fff',marginTop:5}}>我的</Text>
+                    </Button>
+                </FooterTab>
+            </Footer>
+        );
+    }
+}
+let FooterTobarContain = connect((state) => ({
+    status: state.loginIn.status,
+    isSuccess: state.loginIn.isSuccess,
+    user: state.loginIn.user,
+}), (dispatch) => ({
+    isLogin: (user) => dispatch(isLogin(user)),
+}))(FooterTobar);
 const CustomDrawerContentComponent = props => (
     <ScrollView>
         <SafeAreaView style={{flex: 1}} forceInset={{top: 'always', horizontal: 'never'}}>
@@ -52,7 +103,7 @@ const CustomDrawerContentComponent = props => (
             <View style={{flex: 1,paddingRight:10}}>
                 <ListItem icon onPress={()=>{props.navigation.navigate('Register')}}>
                     <Left>
-                            <Icon name="crown" size={18} color='#fff'/>
+                        <Icon name="crown" size={18} color='#fff'/>
                     </Left>
                     <Body style={baseStyle.menusItem}>
                     <Text style={{color:baseStyle.colorWite.color}}>VIP俱乐部</Text>
@@ -61,7 +112,7 @@ const CustomDrawerContentComponent = props => (
                         <Icon name="angle-right" size={22} color='#fff'/>
                     </Right>
                 </ListItem>
-                <ListItem icon onPress={()=>{props.navigation.navigate('Register')}}>
+                <ListItem icon onPress={()=>{props.navigation.navigate('Activity')}}>
                     <Left>
                         <Icon name="gift" size={25} color='#fff'/>
                     </Left>
@@ -148,51 +199,13 @@ const CustomDrawerContentComponent = props => (
     </ScrollView>
 );
 const Hometab = createBottomTabNavigator({
-        Home: {
-            screen: HomeStack,
-            navigationOptions: ({navigation}) => ({
-                title: `首页`,
-                tabBarIcon: ({tintColor, focused}) => (
-                    <Icon
-                        name='home' size={20} color={baseStyle.acyive(focused)}
-                    />
-                ),
-            }),
-        },
-        Activity: {
-            screen: Activity,
-            navigationOptions: () => ({
-                title: `活动`,
-                tabBarIcon: ({tintColor, focused}) => (
-                    <Icon
-                        name='gift' size={20} color={baseStyle.acyive(focused)}
-                    />
-                ),
-            }),
-        },
-        User: {
-            screen: User,
-            navigationOptions: () => ({
-                title: `我的`,
-                tabBarIcon: ({tintColor, focused}) => (
-                    <Icon
-                        name='user' size={20} color={baseStyle.acyive(focused)}
-                    />
-                ),
-            }),
-        },
+        Home:HomeStack,
+        Activity:Activity
     },
     {
-        tabBarOptions: {
-            activeTintColor: baseStyle.acyive(true),
-            inactiveTintColor: '#fff',
-            labelStyle: {
-                fontSize: 12,
-            },
-            style: {
-                backgroundColor: baseStyle.them.backgroundColor
-            },
-        }
+        tabBarComponent:({navigation})=>(
+            <FooterTobarContain navigat={navigation}/>
+        )
     }
 );
 const MyDrawerNavigator = createDrawerNavigator({
@@ -200,12 +213,6 @@ const MyDrawerNavigator = createDrawerNavigator({
             screen: Hometab,
             navigationOptions: () => ({
                 title: `首页`,
-            }),
-        },
-        Activity: {
-            screen: Activity,
-            navigationOptions: () => ({
-                title: `活动`,
             }),
         },
         User: {

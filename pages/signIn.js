@@ -64,9 +64,16 @@ class SignIn extends Component {
             if (res.Code == 'NoError') {
 
                 this.props.login(res.Data, 'LOGIN_IN_DONE');
-                this.props.navigation.navigate('Home');
                 AsyncStorage.setItem('user', JSON.stringify(res.Data));
                 AsyncStorage.setItem('zz', res.Data.SessionId);
+              let page= this.props.navigation.getParam('pageName');
+              if(page)
+              {
+                  this.props.navigation.navigate('User')
+              }
+              else {
+                  this.props.navigation.navigate('Home');
+              }
             } else {
                 Toast.show({
                     text: res.Code,
@@ -86,7 +93,7 @@ class SignIn extends Component {
             <Container style={baseStyle.loginContainer}>
                 <Header style={baseStyle.headerStyle}>
                     <Left>
-                        <Button transparent onPress={() => this.props.navigation.goBack()}>
+                        <Button transparent onPress={() => this.props.navigation.navigate('Home')}>
                             <Icon name='chevron-left' size={26} color={baseStyle.colorWite.color}/>
                         </Button>
                     </Left>

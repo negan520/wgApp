@@ -67,13 +67,9 @@ class HeaderR extends React.Component {
                     <Text style={{color:'#fff'}}>注册</Text>
                 </Button>
             </ImageBackground>
-        ) : (<View>
-            <Button
-                onPress={() => this.userLoginOut()}
-                title="退出"
-                color="#fff"
-            />
-        </View>)
+        ) : (
+            <Text onPress={() => this.userLoginOut()} style={{color:"#fff"}}>退出</Text>
+        )
     }
 }
 
@@ -114,7 +110,7 @@ class HomeScreen extends Component {
         });
     }
     componentDidMount(): void {
-        AsyncStorage.getItem('userToken').then((res) => {
+        AsyncStorage.getItem('zz').then((res) => {
             let data = res;
             if (data) {
                 this.props.login(data, 'LOGIN_IN_DONE');
