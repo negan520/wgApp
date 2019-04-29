@@ -14,7 +14,9 @@ import Agent from './pages/agent';
 import signIn from './pages/signIn';
 import Register from './pages/register';
 import Vip from './pages/vip';
-import vipClub from './pages/vipClub'
+import vipClub from './pages/vipClub';
+import Fund from './pages/fund';
+import Safe from './pages/safe';
 import { Button, Container,ListItem,Left,Body,Right,Footer,FooterTab} from 'native-base';
 import {baseStyle} from "./style/base";
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -248,6 +250,12 @@ const MyDrawerNavigator = createDrawerNavigator({
             navigationOptions: () => ({
                 title: `VIP`,
             }),
+        },
+        Fund: {
+            screen: Fund
+        },
+        Safe: {
+            screen: Safe
         }
     },
     {

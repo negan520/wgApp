@@ -120,7 +120,7 @@ export default class User extends Component{
                           </TouchableOpacity>
                       </View>
                       <View style={baseStyle.userInfoLink}>
-                          <TouchableOpacity style={baseStyle.userInfoLinkContain} onPress={this._onPressButton}>
+                          <TouchableOpacity style={baseStyle.userInfoLinkContain} onPress={()=>this.props.navigation.navigate('Fund')}>
                           <Image style={{width:60,height:60}}  source={require('../images/linkIcon-fundingRecordsl.png')}/>
                           <Text style={{color:'#fff',textAlign:'center'}}>资金记录</Text>
                           </TouchableOpacity>
@@ -138,7 +138,7 @@ export default class User extends Component{
                           </TouchableOpacity>
                       </View>
                       <View style={baseStyle.userInfoLink}>
-                          <TouchableOpacity style={baseStyle.userInfoLinkContain} onPress={this._onPressButton}>
+                          <TouchableOpacity style={baseStyle.userInfoLinkContain} onPress={()=>this.props.navigation.navigate('Safe')}>
                           <Image style={{width:60,height:60}}  source={require('../images/linkIcon-loginPasswordl.png')} />
                           <Text style={{color:'#fff',textAlign:'center'}}>安全中心</Text>
                           </TouchableOpacity>
