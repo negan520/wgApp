@@ -44,22 +44,27 @@ export default class Safe extends Component{
                        <View style={[baseStyle.vipListItem,baseStyle.borderBlue,baseStyle.borderBottom]}>
                            <Text style={baseStyle.vipListItemTxleft}>钱包余额</Text><Text style={[baseStyle.marRight10,baseStyle.greenColor]}>0.00</Text>
                        </View>
-                       <TouchableOpacity onPress={()=>this.props.navigation.navigate('Activity')}>
+                       <TouchableOpacity onPress={()=>this.props.navigation.navigate('Concacts')}>
                        <View style={[baseStyle.vipListItem,baseStyle.borderBlue,baseStyle.borderBottom,{paddingRight:10}]}>
                            <Text style={baseStyle.vipListItemTxleft}>修改个人信息</Text><Icon name='arrow-right' size={20} color={'#fff'}/>
                        </View>
                        </TouchableOpacity>
-                       <TouchableOpacity onPress={()=>this.props.navigation.navigate('Activity')}>
+                       <TouchableOpacity onPress={()=>this.props.navigation.navigate('EditPassWord')}>
                            <View style={[baseStyle.vipListItem,baseStyle.borderBlue,baseStyle.borderBottom,{paddingRight:10}]}>
                                <Text style={baseStyle.vipListItemTxleft}>修改登录密码</Text><Icon name='arrow-right' size={20} color={'#fff'}/>
                            </View>
                        </TouchableOpacity>
-                       <TouchableOpacity onPress={()=>this.props.navigation.navigate('Activity')}>
+                       <TouchableOpacity onPress={()=>this.props.navigation.navigate('EditSafePass')}>
+                           <View style={[baseStyle.vipListItem,baseStyle.borderBlue,baseStyle.borderBottom,{paddingRight:10}]}>
+                               <Text style={baseStyle.vipListItemTxleft}>修改安全密码</Text><Icon name='arrow-right' size={20} color={'#fff'}/>
+                           </View>
+                       </TouchableOpacity>
+                       <TouchableOpacity onPress={()=>this.props.navigation.navigate('PassProtection')}>
                            <View style={[baseStyle.vipListItem,baseStyle.borderBlue,baseStyle.borderBottom,{paddingRight:10}]}>
                                <Text style={baseStyle.vipListItemTxleft}>设置密保</Text><Icon name='arrow-right' size={20} color={'#fff'}/>
                            </View>
                        </TouchableOpacity>
-                       <TouchableOpacity onPress={()=>this.props.navigation.navigate('Activity')}>
+                       <TouchableOpacity onPress={()=>this.props.navigation.navigate('BankCard')}>
                            <View style={[baseStyle.vipListItem,baseStyle.borderBlue,baseStyle.borderBottom,{paddingRight:10}]}>
                                <Text style={baseStyle.vipListItemTxleft}>银行卡</Text><Icon name='arrow-right' size={20} color={'#fff'}/>
                            </View>

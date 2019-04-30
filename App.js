@@ -17,6 +17,11 @@ import Vip from './pages/vip';
 import vipClub from './pages/vipClub';
 import Fund from './pages/fund';
 import Safe from './pages/safe';
+import Concacts from './pages/contacts';
+import EditPassWord from './pages/editPassword';
+import EditSafePass from './pages/editSafePass';
+import PassProtection from './pages/passProtection';
+import BankCard from './pages/bankCard';
 import { Button, Container,ListItem,Left,Body,Right,Footer,FooterTab} from 'native-base';
 import {baseStyle} from "./style/base";
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -103,7 +108,7 @@ const CustomDrawerContentComponent = props => (
                 </View>
             </View>
             <View style={{flex: 1,paddingRight:10}}>
-                <ListItem icon onPress={()=>{props.navigation.navigate('Register')}}>
+                <ListItem icon onPress={()=>{props.navigation.navigate('vipClub')}}>
                     <Left>
                         <Icon name="crown" size={18} color='#fff'/>
                     </Left>
@@ -136,7 +141,7 @@ const CustomDrawerContentComponent = props => (
                         <Icon name="angle-right" size={25} color='#fff'/>
                     </Right>
                 </ListItem>
-                <ListItem icon onPress={()=>{props.navigation.navigate('Register')}}>
+                <ListItem icon onPress={()=>{props.navigation.navigate('Safe')}}>
                     <Left>
                         <Icon name="universal-access" size={25} color='#fff'/>
                     </Left>
@@ -147,7 +152,7 @@ const CustomDrawerContentComponent = props => (
                         <Icon name="angle-right" size={25} color='#fff'/>
                     </Right>
                 </ListItem>
-                <ListItem icon onPress={()=>{props.navigation.navigate('Register')}}>
+                <ListItem icon onPress={()=>{props.navigation.navigate('User')}}>
                     <Left>
                         <Icon name="user-circle" size={25} color='#fff'/>
                     </Left>
@@ -256,8 +261,23 @@ const MyDrawerNavigator = createDrawerNavigator({
         },
         Safe: {
             screen: Safe
-        }
-    },
+        },
+        Concacts:{
+            screen: Concacts
+        },
+        EditPassWord:{
+            screen: EditPassWord
+        },
+        EditSafePass:{
+            screen: EditSafePass
+        },
+        PassProtection:{
+            screen: PassProtection
+        },
+        BankCard:{
+            screen: BankCard
+},
+        },
     {
         drawerBackgroundColor: baseStyle.mainBackground.backgroundColor,
         contentOptions: {

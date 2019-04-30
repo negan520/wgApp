@@ -69,7 +69,7 @@ export const baseStyle=StyleSheet.create({
        color:'#fff'
    },
     colorWite:{
-       color:'#fff'
+       color:'#fff',
     },
     menusItem:{
         borderColor:'#123079'

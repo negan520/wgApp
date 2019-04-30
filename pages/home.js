@@ -242,9 +242,11 @@ class HomeScreen extends Component {
                                         paddingRight: 10
                                     }}>
                                         <Image
+                                            onLoad={()=>{station[0].loading='2444'}}
                                             style={{width: '100%', height: 69}}
                                             source={{uri: domain + '/assets/images/game/' + station[0].GameId + '.png'}}
                                         />
+                                        <Text>{station[0].loading}as</Text>
                                         <Text style={{color: '#fff', textAlign: 'center', marginTop: 5}}>
                                             {station[1]}
                                         </Text>

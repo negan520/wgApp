@@ -8,3 +8,4 @@ export const signIn=(data)=>post('/d/member/login','data='+JSON.stringify(data))
 export const signOut=(data)=>post('/d/s/logout','data='+null);//退出登录
 export const getAnounce=(data)=>post('/d/m/carouseladvert/list','data='+null);//公告
 export const getActivity=(data)=>post('/d/m/promotion/promotionlist','data=');//获取优惠活动
+export const getBankList=(data)=>post('/d/bank/listname','data=');//获取银行列表
