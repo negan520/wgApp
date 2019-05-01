@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View, Image, ImageBackground, StyleSheet, FlatList, ScrollView, AsyncStorage} from 'react-native';
+import {Text, View, Image, ImageBackground, StyleSheet, FlatList, ScrollView, AsyncStorage,TouchableOpacity} from 'react-native';
 import Swiper from 'react-native-swiper';
 import {Container, Header, Tab, Tabs, TabHeading,Button} from 'native-base';
 import {getInfo, getSwiper, getGameList, getChildGameList} from '../serve/getData';
@@ -28,7 +28,7 @@ class Homebutton extends React.Component {
     render() {
         return (
             <Icon name='list-ul' onPress={() => _this.props.navigation.openDrawer()}
-                  size={30} color="#fff"  style={{marginLeft:10}}/>
+                  size={22} color="#fff"  style={{marginLeft:10}}/>
         );
     }
 }
@@ -80,7 +80,28 @@ let HeaderRContainer = connect((state) => ({
 }), (dispatch) => ({
     isLogin: (user) => dispatch(isLogin(user)),
 }))(HeaderR);
+class ImageView extends React.Component{//占位图效果组件
+    state: {
+        loading: boolean;
+    };
+    constructor(props) {
+        super(props);
+        this.state = {
+            loading: true,
+        };
+    }
+    componentWillMount(){
 
+    }
+    render() {
+        return (
+            <View style={[this.props.style,{position:'relative'}]}>
+                <Image style={[this.props.style]} source={this.props.source} onLoad={() => this.setState({loading: false})}/>
+                {this.state.loading ? <Image style={[this.props.style,{positionX:0,positionY:0,position:'absolute'}]} source={this.props.placeholderSource}/> : null}
+            </View>
+        );
+    }
+}
 class HomeScreen extends Component {
     constructor(props) {
         super(props);
@@ -89,12 +110,27 @@ class HomeScreen extends Component {
             swipers: [],
             gameList: null,
             gameChild: [],
+            lotteryList:[],
             tabIndex: 0,
             merhcantInfo:'',
-            lastingDomai:''
+            lastingDomai:'',
+            tabNav:[
+                {name:'棋牌',active:require('../images/active_gameType_Card.png'),img:require('../images/gameType_Card.png')},
+                {name:'真人',active:require('../images/active_gameType_Casino.png'),img:require('../images/gameType_Casino.png')},
+                {name:'彩票',active:require('../images/active_gameType_Lottery.png'),img:require('../images/gameType_Lottery.png')},
+                {name:'电子',active:require('../images/active_gameType_Egames.png'),img:require('../images/gameType_Egames.png')},
+                {name:'捕鱼',active:require('../images/active_gameType_Fish.png'),img:require('../images/gameType_Fish.png')},
+                {name:'体育',active:require('../images/active_gameType_SportsBook.png'),img:require('../images/gameType_SportsBook.png')},
+                ]
         };
         this.changgeTab = (index) => {
-            this.setState({tabIndex: index})
+            this.setState({tabIndex: index});
+            if (index==2)
+            {
+                getChildGameList(JSON.stringify({"ParentClassId":33,"ChildClassId":0,"IsHot":false,"Platform":2})).then(res => {
+                    this.setState({lotteryList: res.Data});
+                });
+            }
         }
     }
 
@@ -162,7 +198,8 @@ class HomeScreen extends Component {
                     }
                 }
             }
-            this.setState({gameList: gameType})
+            this.setState({gameList: gameType});
+            console.log(this.state.gameList,'sgdhs');
         })
         getChildGameList(JSON.stringify({
             "ParentClassId": 12,
@@ -227,88 +264,159 @@ class HomeScreen extends Component {
                         </MarqueeLabel>
                     </View>
                 </View>
-                <Tabs onChangeTab={(item) => this.setState({tabIndex: item.i})}>
-                    <Tab heading="棋牌" activeTextStyle={{color: styles.gameTabStyle.color}}
-                         activeTabStyle={{backgroundColor: baseStyle.acyive(true)}}
-                         textStyle={{color: styles.gameTabStyle.color}} tabStyle={styles.gameTabStyle}>
-                        <View style={{flex: 1, flexDirection: 'row', flexWrap: 'wrap', backgroundColor: '#101d3d'}}>
-                            {
-                                this.state.gameChild.map((station, index) => (
-                                    <View key={index} style={{
-                                        width: '25%',
-                                        height: 89,
-                                        marginTop: 20,
-                                        paddingLeft: 10,
-                                        paddingRight: 10
-                                    }}>
-                                        <Image
-                                            onLoad={()=>{station[0].loading='2444'}}
-                                            style={{width: '100%', height: 69}}
-                                            source={{uri: domain + '/assets/images/game/' + station[0].GameId + '.png'}}
-                                        />
-                                        <Text>{station[0].loading}as</Text>
-                                        <Text style={{color: '#fff', textAlign: 'center', marginTop: 5}}>
-                                            {station[1]}
-                                        </Text>
-                                    </View>
-                                ))
-                            }
-                        </View>
-                    </Tab>
-                    <Tab heading="真人" activeTextStyle={{color: styles.gameTabStyle.color}}
-                         activeTabStyle={{backgroundColor: baseStyle.acyive(true)}}
-                         textStyle={{color: styles.gameTabStyle.color}} tabStyle={styles.gameTabStyle}>
-                        <View style={{flex: 1, flexDirection: 'row', flexWrap: 'wrap', backgroundColor: '#101d3d'}}>
-                            {
-                                (this.state.tabIndex == 1) ? this.state.gameList[1].child.map((station, index) => (
-                                    <View key={station.Id} style={{
-                                        width: '50%',
-                                        height: 120,
+                <View style={{flex:1,flexDirection:'row',borderTopWidth:1,borderBottomWidth:1,borderColor:'#123079',borderStyle:'solid',height:74}}>
+                    {
+                        this.state.tabNav.map((station,index)=>(
+                            <TouchableOpacity onPress={() => this.changgeTab(index)} style={{flex:1,height:74,alignItems:'center',justifyContent:'center'}}>
+                                {
+                                    this.state.tabIndex==index?(
+                                        <ImageBackground style={{flex:1,alignItems:'center',height:74,width:'100%',justifyContent:'center'}} source={require('../images/game_nav_active.png')}>
+                                            <Image style={{height:38,width:38}} source={station.active}/>
+                                            <Text style={{color:'#fff',marginTop:5}}>{station.name}</Text>
+                                        </ImageBackground>
+                                    ):(<View style={{flex:1,alignItems:'center',height:74,width:'100%',justifyContent:'center'}}>
+                                        <Image style={{height:38,width:38}} source={station.img}/>
+                                        <Text style={{color:'#fff',marginTop:5}}>{station.name}</Text>
+                                    </View>)
+                                }
+                            </TouchableOpacity>
+                        ))
+                    }
+                </View>
+                <View style={{flex:1}}>
+                    {(()=>{
+                            switch(this.state.tabIndex){
+                                case 0:return ( <View style={{flex: 1, flexDirection: 'row', flexWrap: 'wrap', backgroundColor: '#101d3d'}}>
+                                    {
+                                        this.state.gameChild.map((station, index) => (
+                                            <View style={{
+                                                width: '25%',
+                                                height: 89,
+                                                marginTop: 20,
+                                                paddingLeft:5,
+                                                paddingRight:5,
+                                                paddingBottom:10
+                                            }}>
+                                                <View key={index} style={{backgroundColor:'#162a5b',borderRadius:5,paddingBottom:10,alignItems:'center'}}>
+                                                    <ImageView style={{width:69, height: 69,textAlign:'center'}} source={{uri: domain + '/assets/images/game/' + station[0].GameId + '.png'}} placeholderSource={require('../images/loading_small.png')}/>
+                                                    <Text numberOfLines={1} style={{color: '#fff', textAlign: 'center', marginTop: 5}}>
+                                                        {station[1]}
+                                                    </Text>
+                                                </View>
+                                            </View>
+                                        ))
+                                    }
+                                </View>); break;
+                                case 1:return ( <View style={{flex: 1, flexDirection: 'row', flexWrap: 'wrap', backgroundColor: '#101d3d'}}>
+                                    {
+                                        (this.state.tabIndex == 1) ? this.state.gameList[1].child.map((station, index) => (
+                                            <View key={station.Id} style={{
+                                                width: '50%',
+                                                height: 120,
+                                                marginTop: 10,
+                                                paddingLeft: 5,
+                                                paddingRight: 5
+                                            }}>
+                                                <Image
+                                                    style={{width: '100%', height: 120}}
+                                                    source={{uri: domain + '/assets/images/game' + station.Id + '.png'}}
+                                                />
+                                            </View>
+                                        )) : (<View/>)
+                                    }
+                                </View>); break;
+                                case 2:return ( <View style={{flex: 1, flexDirection: 'row', flexWrap: 'wrap', backgroundColor: '#101d3d'}}>
+                                    {
+                                        this.state.lotteryList.map((station, index) => (
+                                            <View style={{
+                                                width: '25%',
+                                                height: 89,
+                                                marginTop: 20,
+                                                paddingLeft:5,
+                                                paddingRight:5,
+                                                paddingBottom:10
+                                            }}>
+                                                <View key={index} style={{backgroundColor:'#162a5b',borderRadius:5,paddingBottom:10,alignItems:'center'}}>
+                                                    <ImageView style={{width:69, height: 69}} source={{uri: domain + '/assets/images/game/' + station[0].GameId + '.png'}} placeholderSource={require('../images/loading_small.png')}/>
+                                                    <Text numberOfLines={1} style={{color: '#fff', textAlign: 'center', marginTop: 5}}>
+                                                        {station[1]}
+                                                    </Text>
+                                                </View>
+                                            </View>
+                                        ))
+                                    }
+                                </View>); break;
+                                case 3:return (<View style={{flex: 1, flexDirection: 'row', flexWrap: 'wrap', backgroundColor: '#101d3d'}}>
+                                    {
+                                        (this.state.tabIndex == 3) ? this.state.gameList[3].child.map((station, index) => (
+                                            <View key={station.Id} style={{
+                                                width: '50%',
+                                                height: 120,
+                                                marginTop: 10,
+                                                paddingLeft: 5,
+                                                paddingRight: 5
+                                            }}>
+                                                <Image
+                                                    style={{width: '100%', height: 120}}
+                                                    source={{uri: domain + '/assets/images/game' + station.Id + '.png'}}
+                                                />
+                                            </View>
+                                        )) : (<View/>)
+                                    }
+                                </View>) ; break;
+                                case 4: return(<View style={{flex: 1,backgroundColor: '#101d3d'}}>
+                                    {
+                                        (this.state.tabIndex ==4) ? this.state.gameList[4].child.map((station, index) => (
+                                            <View key={station.Id} style={{
+                                                flex:1,
+                                                height: 123,
+                                                marginTop: 10,
+                                                paddingLeft: 5,
+                                                paddingRight: 5
+                                            }}>
+                                                <Image
+                                                    style={{width: '100%', height: 120}}
+                                                    source={{uri: domain + '/assets/Default/game' + station.Id + '.png'}}
+                                                />
+                                            </View>
+                                        )) : (<View/>)
+                                    }
+                                    <View style={{
+                                        flex:1,
+                                        height: 123,
                                         marginTop: 10,
                                         paddingLeft: 5,
                                         paddingRight: 5
                                     }}>
                                         <Image
                                             style={{width: '100%', height: 120}}
-                                            source={{uri: domain + '/assets/images/game' + station.Id + '.png'}}
+                                            source={{uri:'http://m.yc02.com/assets/Default/gameFishjqqd.png'}}
                                         />
                                     </View>
-                                )) : (<View/>)
+                                </View>);break;
+                                case 5: return(<View style={{flex: 1,backgroundColor: '#101d3d'}}>
+                                    {
+                                        (this.state.tabIndex ==5) ? this.state.gameList[5].child.map((station, index) => (
+                                            <View key={station.Id} style={{
+                                                flex:1,
+                                                height: 123,
+                                                marginTop: 10,
+                                                paddingLeft: 5,
+                                                paddingRight: 5
+                                            }}>
+                                                <Image
+                                                    style={{width: '100%', height: 120}}
+                                                    source={{uri: domain + '/assets/Default/game' + station.Id + '.png'}}
+                                                />
+                                            </View>
+                                        )) : (<View/>)
+                                    }
+                                </View>);break;
+                                default:return null;
                             }
-                        </View>
-                    </Tab>
-                    <Tab heading="彩票" activeTextStyle={{color: styles.gameTabStyle.color}}
-                         activeTabStyle={{backgroundColor: baseStyle.acyive(true)}}
-                         textStyle={{color: styles.gameTabStyle.color}} tabStyle={styles.gameTabStyle}>
-                        <View>
-                            <View style={{width: 50, height: 50, backgroundColor: 'powderblue'}}>
-
-                            </View>
-                            <View style={{width: 100, height: 100, backgroundColor: 'skyblue'}}>
-
-                            </View>
-                            <View style={{width: 150, height: 150, backgroundColor: 'steelblue'}}/>
-                        </View>
-                    </Tab>
-                    <Tab heading="电子" activeTextStyle={{color: styles.gameTabStyle.color}}
-                         activeTabStyle={{backgroundColor: baseStyle.acyive(true)}}
-                         textStyle={{color: styles.gameTabStyle.color}} tabStyle={styles.gameTabStyle}>
-                        <View>
-                            <View style={{width: 50, height: 50, backgroundColor: 'powderblue'}}/>
-                            <View style={{width: 100, height: 100, backgroundColor: 'skyblue'}}/>
-                            <View style={{width: 150, height: 150, backgroundColor: 'steelblue'}}/>
-                        </View>
-                    </Tab>
-                    <Tab heading="捕鱼" activeTextStyle={{color: styles.gameTabStyle.color}}
-                         activeTabStyle={{backgroundColor: baseStyle.acyive(true)}}
-                         textStyle={{color: styles.gameTabStyle.color}} tabStyle={styles.gameTabStyle}>
-                        <View>
-                            <View style={{width: 50, height: 50, backgroundColor: 'powderblue'}}/>
-                            <View style={{width: 100, height: 100, backgroundColor: 'skyblue'}}/>
-                            <View style={{width: 150, height: 150, backgroundColor: 'steelblue'}}/>
-                        </View>
-                    </Tab>
-                </Tabs>
+                        }
+                    )()}
+                </View>
             </ScrollView>
         );
     }
