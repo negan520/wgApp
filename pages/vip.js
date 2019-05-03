@@ -27,17 +27,6 @@ export default class Vip extends Component{
     render() {
         return (
             <Container style={baseStyle.main}>
-                <Header style={baseStyle.headerStyle}>
-                    <Left>
-                        <Button transparent onPress={() => this.props.navigation.goBack()}>
-                            <Icon name='chevron-left' size={26} color={baseStyle.colorWite.color}/>
-                        </Button>
-                    </Left>
-                    <Body>
-                    <Title style={baseStyle.headerStyle}>VIP详情</Title>
-                    </Body>
-                    <Right/>
-                </Header>
                 <ScrollView>
                    <View style={baseStyle.vipContain}>
                        <View style={[baseStyle.vipListItem,baseStyle.borderBlue,baseStyle.borderBottom]}>

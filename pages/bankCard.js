@@ -16,7 +16,7 @@ import {
 import {baseStyle} from "../style/base";
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import {getBankList} from "../serve/getData";
-
+import NavigationService from '../config/NavigationService';
 export default class BankCard extends Component{
     constructor(props){
         super(props);
@@ -45,17 +45,6 @@ export default class BankCard extends Component{
     render() {
         return (
             <Container style={baseStyle.main}>
-                <Header style={baseStyle.headerStyle}>
-                    <Left>
-                        <Button transparent onPress={() => this.props.navigation.goBack()}>
-                            <Icon name='chevron-left' size={26} color={baseStyle.colorWite.color}/>
-                        </Button>
-                    </Left>
-                    <Body>
-                    <Title style={baseStyle.headerStyle}>绑定银行卡</Title>
-                    </Body>
-                    <Right/>
-                </Header>
                 <ScrollView>
                     <View>
                         <Form>

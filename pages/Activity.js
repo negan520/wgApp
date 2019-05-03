@@ -14,6 +14,7 @@ import {baseStyle} from "../style/base";
 import {getActivity} from "../serve/getData";
 import Img from '../component/Img';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import NavigationService from '../config/NavigationService';
 export default class Activity extends Component{
     constructor(props) {
         super(props);
@@ -45,9 +46,7 @@ export default class Activity extends Component{
             <Container style={baseStyle.main}>
                 <Header style={baseStyle.headerStyle}>
                     <Left>
-                        <Button transparent onPress={() => this.props.navigation.goBack()}>
-                            <Icon name='chevron-left' size={26} color={baseStyle.colorWite.color}/>
-                        </Button>
+
                     </Left>
                     <Body>
                     <Title style={baseStyle.headerStyle}>优惠活动</Title>

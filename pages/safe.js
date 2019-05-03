@@ -11,6 +11,7 @@ import {
 } from 'native-base'
 import {baseStyle} from "../style/base";
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import NavigationService from '../config/NavigationService';
 export default class Safe extends Component{
     constructor(props){
         super(props);
@@ -22,17 +23,6 @@ export default class Safe extends Component{
     render() {
         return (
             <Container style={baseStyle.main}>
-                <Header style={baseStyle.headerStyle}>
-                    <Left>
-                        <Button transparent onPress={() => this.props.navigation.goBack()}>
-                            <Icon name='chevron-left' size={26} color={baseStyle.colorWite.color}/>
-                        </Button>
-                    </Left>
-                    <Body>
-                    <Title style={baseStyle.headerStyle}>安全中心</Title>
-                    </Body>
-                    <Right/>
-                </Header>
                 <ScrollView>
                    <View>
                        <View style={[baseStyle.vipListItem,baseStyle.borderBlue,baseStyle.borderBottom]}>
@@ -44,27 +34,27 @@ export default class Safe extends Component{
                        <View style={[baseStyle.vipListItem,baseStyle.borderBlue,baseStyle.borderBottom]}>
                            <Text style={baseStyle.vipListItemTxleft}>钱包余额</Text><Text style={[baseStyle.marRight10,baseStyle.greenColor]}>0.00</Text>
                        </View>
-                       <TouchableOpacity onPress={()=>this.props.navigation.navigate('Concacts')}>
+                       <TouchableOpacity onPress={()=>NavigationService.navigate('Concacts')}>
                        <View style={[baseStyle.vipListItem,baseStyle.borderBlue,baseStyle.borderBottom,{paddingRight:10}]}>
                            <Text style={baseStyle.vipListItemTxleft}>修改个人信息</Text><Icon name='arrow-right' size={20} color={'#fff'}/>
                        </View>
                        </TouchableOpacity>
-                       <TouchableOpacity onPress={()=>this.props.navigation.navigate('EditPassWord')}>
+                       <TouchableOpacity onPress={()=>NavigationService.navigate('EditPassWord')}>
                            <View style={[baseStyle.vipListItem,baseStyle.borderBlue,baseStyle.borderBottom,{paddingRight:10}]}>
                                <Text style={baseStyle.vipListItemTxleft}>修改登录密码</Text><Icon name='arrow-right' size={20} color={'#fff'}/>
                            </View>
                        </TouchableOpacity>
-                       <TouchableOpacity onPress={()=>this.props.navigation.navigate('EditSafePass')}>
+                       <TouchableOpacity onPress={()=>NavigationService.navigate('EditSafePass')}>
                            <View style={[baseStyle.vipListItem,baseStyle.borderBlue,baseStyle.borderBottom,{paddingRight:10}]}>
                                <Text style={baseStyle.vipListItemTxleft}>修改安全密码</Text><Icon name='arrow-right' size={20} color={'#fff'}/>
                            </View>
                        </TouchableOpacity>
-                       <TouchableOpacity onPress={()=>this.props.navigation.navigate('PassProtection')}>
+                       <TouchableOpacity onPress={()=>NavigationService.navigate('PassProtection')}>
                            <View style={[baseStyle.vipListItem,baseStyle.borderBlue,baseStyle.borderBottom,{paddingRight:10}]}>
                                <Text style={baseStyle.vipListItemTxleft}>设置密保</Text><Icon name='arrow-right' size={20} color={'#fff'}/>
                            </View>
                        </TouchableOpacity>
-                       <TouchableOpacity onPress={()=>this.props.navigation.navigate('BankCard')}>
+                       <TouchableOpacity onPress={()=>NavigationService.navigate('BankCard')}>
                            <View style={[baseStyle.vipListItem,baseStyle.borderBlue,baseStyle.borderBottom,{paddingRight:10}]}>
                                <Text style={baseStyle.vipListItemTxleft}>银行卡</Text><Icon name='arrow-right' size={20} color={'#fff'}/>
                            </View>

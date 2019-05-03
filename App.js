@@ -7,6 +7,7 @@ import {
     createDrawerNavigator,
     DrawerItems
 } from 'react-navigation';
+import NavigationService from './config/NavigationService';
 import HomeScreen from './pages/home';
 import Activity from './pages/Activity';
 import User from './pages/user';
@@ -205,6 +206,96 @@ const CustomDrawerContentComponent = props => (
         </SafeAreaView>
     </ScrollView>
 );
+const UserStack = createStackNavigator({
+    User: {
+        screen: User,
+        navigationOptions: () => ({
+            headerTitle:<View style={[baseStyle.headerStyle,{flex:1,flexDirection:'row'}]}>
+                <View style={{flex:1,justifyContent:'center',alignItems:'center',paddingLeft:10}}>
+                    <Button transparent onPress={() => NavigationService.goBack()}>
+                        <Icon name='chevron-left' size={26} color={baseStyle.colorWite.color}/>
+                    </Button>
+                </View>
+                <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+                    <Text style={{color:'#fff',fontSize:16}}>会员中心</Text>
+                </View>
+                <View style={{flex:1}}></View>
+            </View>,
+            headerBackTitle:null
+        }),
+    },
+    Vip: {
+        screen: Vip,
+        navigationOptions: () => ({
+            title: `VIP详情`,
+            headerBackTitle:null
+        }),
+    },
+    vipClub: {
+        screen: vipClub,
+        navigationOptions: () => ({
+            title: `VIP俱乐部`,
+            headerBackTitle:null
+        }),
+    },
+    Fund: {
+        screen: Fund,
+        navigationOptions: () => ({
+            title: `资金明细`,
+            headerBackTitle:null
+        }),
+    },
+    Safe: {
+        screen: Safe,
+        navigationOptions: () => ({
+            title: `安全中心`,
+            headerBackTitle:null
+        }),
+    },
+    Concacts:{
+        screen: Concacts,
+        navigationOptions: () => ({
+            title: `VIP俱乐部`,
+            headerBackTitle:null
+        }),
+    },
+    EditPassWord:{
+        screen: EditPassWord,
+        navigationOptions: () => ({
+            title: `修改联系方式`,
+            headerBackTitle:null
+        }),
+    },
+    EditSafePass:{
+        screen: EditSafePass,
+        navigationOptions: () => ({
+            title: `修改安全密码`,
+            headerBackTitle:null
+        }),
+    },
+    PassProtection:{
+        screen: PassProtection,
+        navigationOptions: () => ({
+            title: `修改密保问题`,
+            headerBackTitle:null
+        }),
+    },
+    BankCard:{
+        screen: BankCard,
+        navigationOptions: () => ({
+            title: `绑定银行卡`,
+            headerBackTitle:null
+        }),
+    },
+},{
+    defaultNavigationOptions: {
+        headerStyle:baseStyle.headerStyle,
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+            fontWeight: 'bold',
+        },
+    },
+});
 const Hometab = createBottomTabNavigator({
         Home:HomeStack,
         Activity:Activity
@@ -222,11 +313,8 @@ const MyDrawerNavigator = createDrawerNavigator({
                 title: `首页`,
             }),
         },
-        User: {
-            screen: User,
-            navigationOptions: () => ({
-                title: `会员中心`,
-            }),
+        User:{
+            screen:UserStack
         },
         signIn: {
             screen: signIn,
@@ -243,40 +331,7 @@ const MyDrawerNavigator = createDrawerNavigator({
             navigationOptions: () => ({
                 title: `代理`,
             }),
-        },
-        Vip: {
-            screen: Vip,
-            navigationOptions: () => ({
-                title: `VIP`,
-            }),
-        },
-        vipClub: {
-            screen: vipClub,
-            navigationOptions: () => ({
-                title: `VIP`,
-            }),
-        },
-        Fund: {
-            screen: Fund
-        },
-        Safe: {
-            screen: Safe
-        },
-        Concacts:{
-            screen: Concacts
-        },
-        EditPassWord:{
-            screen: EditPassWord
-        },
-        EditSafePass:{
-            screen: EditSafePass
-        },
-        PassProtection:{
-            screen: PassProtection
-        },
-        BankCard:{
-            screen: BankCard
-},
+        }
         },
     {
         drawerBackgroundColor: baseStyle.mainBackground.backgroundColor,
@@ -295,6 +350,7 @@ const MyDrawerNavigator = createDrawerNavigator({
                 fontWeight: 'bold',
             },
         },
+       // backBehavior: 'none',
     }
 );
 

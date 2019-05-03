@@ -12,6 +12,7 @@ import {
 import {baseStyle} from "../style/base";
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import DatePicker from 'react-native-datepicker';
+import NavigationService from '../config/NavigationService';
 export default class Fund extends Component{
     constructor(props){
         super(props);
@@ -23,17 +24,6 @@ export default class Fund extends Component{
     render() {
         return (
             <Container style={baseStyle.main}>
-                <Header style={baseStyle.headerStyle}>
-                    <Left>
-                        <Button transparent onPress={() => this.props.navigation.goBack()}>
-                            <Icon name='chevron-left' size={26} color={baseStyle.colorWite.color}/>
-                        </Button>
-                    </Left>
-                    <Body>
-                    <Title style={baseStyle.headerStyle}>资金记录</Title>
-                    </Body>
-                    <Right/>
-                </Header>
                 <ScrollView>
                     <DatePicker
                         is24Hour={true}

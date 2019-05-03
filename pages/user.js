@@ -13,6 +13,7 @@ import {
 import {baseStyle} from "../style/base";
 import {getActivity} from "../serve/getData";
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import NavigationService from '../config/NavigationService';
 export default class User extends Component{
     constructor(props) {
         super(props);
@@ -29,17 +30,6 @@ export default class User extends Component{
     render() {
         return (
             <Container style={baseStyle.main}>
-                <Header style={baseStyle.headerStyle}>
-                    <Left>
-                        <Button transparent onPress={() => this.props.navigation.goBack()}>
-                            <Icon name='chevron-left' size={26} color={baseStyle.colorWite.color}/>
-                        </Button>
-                    </Left>
-                    <Body>
-                    <Title style={baseStyle.headerStyle}>会员中心</Title>
-                    </Body>
-                    <Right/>
-                </Header>
                 <ScrollView>
                   <View style={baseStyle.userInfo}>
                       <ImageBackground source={require('../images/personal_card.png')} style={{
@@ -102,13 +92,13 @@ export default class User extends Component{
                   </View>
                   <View style={{flex:1,flexDirection:"row",marginTop:10,justifyContent:"space-evenly",flexWrap:'wrap'}}>
                       <View style={baseStyle.userInfoLink}>
-                          <TouchableOpacity style={baseStyle.userInfoLinkContain} onPress={()=>this.props.navigation.navigate('Activity')}>
+                          <TouchableOpacity style={baseStyle.userInfoLinkContain} onPress={()=>NavigationService.navigate('Activity')}>
                              <Image style={{width:60,height:60}}  source={require('../images/linkIcon-promotion.png')}/>
                              <Text style={{color:'#fff',textAlign:'center'}}>优惠活动</Text>
                           </TouchableOpacity>
                       </View>
                       <View style={baseStyle.userInfoLink}>
-                          <TouchableOpacity style={baseStyle.userInfoLinkContain} onPress={()=>this.props.navigation.navigate('Vip')}>
+                          <TouchableOpacity style={baseStyle.userInfoLinkContain} onPress={()=>NavigationService.navigate('Vip')}>
                           <Image style={{width:60,height:60}}  source={require('../images/linkIcon-vip.png')} />
                           <Text style={{color:'#fff',textAlign:'center'}}>Vip特权</Text>
                           </TouchableOpacity>
@@ -120,7 +110,7 @@ export default class User extends Component{
                           </TouchableOpacity>
                       </View>
                       <View style={baseStyle.userInfoLink}>
-                          <TouchableOpacity style={baseStyle.userInfoLinkContain} onPress={()=>this.props.navigation.navigate('Fund')}>
+                          <TouchableOpacity style={baseStyle.userInfoLinkContain} onPress={()=>NavigationService.navigate('Fund')}>
                           <Image style={{width:60,height:60}}  source={require('../images/linkIcon-fundingRecordsl.png')}/>
                           <Text style={{color:'#fff',textAlign:'center'}}>资金记录</Text>
                           </TouchableOpacity>
@@ -138,7 +128,7 @@ export default class User extends Component{
                           </TouchableOpacity>
                       </View>
                       <View style={baseStyle.userInfoLink}>
-                          <TouchableOpacity style={baseStyle.userInfoLinkContain} onPress={()=>this.props.navigation.navigate('Safe')}>
+                          <TouchableOpacity style={baseStyle.userInfoLinkContain} onPress={()=>NavigationService.navigate('Safe')}>
                           <Image style={{width:60,height:60}}  source={require('../images/linkIcon-loginPasswordl.png')} />
                           <Text style={{color:'#fff',textAlign:'center'}}>安全中心</Text>
                           </TouchableOpacity>

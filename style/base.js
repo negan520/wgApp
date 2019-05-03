@@ -66,7 +66,8 @@ export const baseStyle=StyleSheet.create({
    },
    headerStyle:{
        backgroundColor:'#000543',
-       color:'#fff'
+       color:'#fff',
+       textAlign:'center'
    },
     colorWite:{
        color:'#fff',

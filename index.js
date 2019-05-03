@@ -8,7 +8,8 @@ import configureStore from "./store/ConfigureStore";
 import App from './App';
 import {name as appName} from './app.json';
 import {Root} from 'native-base';
-import Resolution from "./config/Resolution"
+import Resolution from "./config/Resolution";
+import NavigationService from './config/NavigationService';
 const store = configureStore();
 class RootContain extends Component {
     render() {
@@ -16,7 +17,9 @@ class RootContain extends Component {
             <Resolution.FixWidthView>
             <Provider store={store}>
                 <Root>
-                    <App />
+                    <App ref={navigatorRef => {
+                        NavigationService.setTopLevelNavigator(navigatorRef);
+                    }}/>
                 </Root>
             </Provider>
             </Resolution.FixWidthView>
