@@ -91,22 +91,52 @@ const CustomDrawerContentComponent = props => (
                 paddingLeft: 10,
                 paddingRight: 10
             }}>
-                <Image
-                    style={{width: '100%', height: 74, marginBottom: 20}}
-                    source={{uri: 'https://image.hnidb.cn/sr/picture/logo/201901080942121976544636.png'}}
-                />
-                <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-around'}}>
-                    <View style={{width: 68, height: 33}}>
-                        <Button warning style={{height: 33, width: 68, justifyContent: 'center'}}
-                                onPress={() => props.navigation.navigate('Register')}><Text
-                            style={{color: '#fff'}}>注册</Text></Button>
-                    </View>
-                    <View style={{width: 68, height: 33}}>
-                        <Button success style={{height: 33, width: 68, justifyContent: 'center'}}
-                                onPress={() => props.navigation.navigate('signIn')}><Text
-                            style={{color: '#fff'}}>登录</Text></Button>
-                    </View>
-                </View>
+                {
+                    !props.isSuccess?(
+                        <View>
+                            <Image
+                                style={{width: '100%', height: 74, marginBottom: 20}}
+                                source={{uri: 'https://image.hnidb.cn/sr/picture/logo/201901080942121976544636.png'}}
+                            />
+                            <View style={{flex: 1, flexDirection: 'row', justifyContent: 'space-around'}}>
+                                <View style={{width: 68, height: 33}}>
+                                    <Button warning style={{height: 33, width: 68, justifyContent: 'center'}}
+                                            onPress={() => props.navigation.navigate('Register')}><Text
+                                        style={{color: '#fff'}}>注册</Text></Button>
+                                </View>
+                                <View style={{width: 68, height: 33}}>
+                                    <Button success style={{height: 33, width: 68, justifyContent: 'center'}}
+                                            onPress={() => props.navigation.navigate('signIn')}><Text
+                                        style={{color: '#fff'}}>登录</Text></Button>
+                                </View>
+                            </View>
+                        </View>
+                    ):(<View style={{flex:1,flexDirection:'row'}}>
+                        <View>
+                            <Image
+                                style={{width:65,height:80}}
+                                source={require('./images/personal_vip_head.png')}
+                            />
+                        </View>
+                        <View style={{flex:1,paddingLeft:10}}>
+                            <View style={{height:24,flexDirection:'row'}}>
+                                <Text style={{color:'#fff'}}>bixuzimu</Text>
+                                <Button style={baseStyle.lockVipbt}>
+                                    <Text style={baseStyle.lockVipbttx}>特权</Text>
+                                </Button>
+                            </View>
+                            <View style={{paddingTop:10}}>
+                                <Image
+                                    style={{width:150.4,height:24}}
+                                    source={require('./images/personal_vip.png')}
+                                />
+                            </View>
+                            <View style={{height:24,flexDirection:'row',paddingTop:10}}>
+                                <Text style={{color:'#fff'}}>总资产：</Text><Text style={baseStyle.colorYellow}>0</Text>
+                            </View>
+                        </View>
+                    </View>)
+                }
             </View>
             <View style={{flex: 1,paddingRight:10}}>
                 <ListItem icon onPress={()=>{props.navigation.navigate('vipClub')}}>
@@ -142,7 +172,7 @@ const CustomDrawerContentComponent = props => (
                         <Icon name="angle-right" size={25} color='#fff'/>
                     </Right>
                 </ListItem>
-                <ListItem icon onPress={()=>{props.navigation.navigate('Safe')}}>
+                <ListItem icon onPress={()=>{props.navigation.navigate(props.isSuccess?'Safe':'signIn',{'pageName':'Safe'})}}>
                     <Left>
                         <Icon name="universal-access" size={25} color='#fff'/>
                     </Left>
@@ -153,7 +183,7 @@ const CustomDrawerContentComponent = props => (
                         <Icon name="angle-right" size={25} color='#fff'/>
                     </Right>
                 </ListItem>
-                <ListItem icon onPress={()=>{props.navigation.navigate('User')}}>
+                <ListItem icon onPress={()=>{props.navigation.navigate(props.isSuccess?'User':'signIn',{'pageName':'Safe'})}}>
                     <Left>
                         <Icon name="user-circle" size={25} color='#fff'/>
                     </Left>
@@ -198,14 +228,25 @@ const CustomDrawerContentComponent = props => (
                     </Right>
                 </ListItem>
                 <View style={{paddingLeft:20,paddingRight:10,paddingTop:20}}>
-                    <Button full warning style={baseStyle.buttonSubymit}>
-                        <Text style={{color:'#fff'}}>免费试玩</Text>
-                    </Button>
+                    {
+                        props.isSuccess?<Button full warning style={[baseStyle.btnBase,baseStyle.buttonDanger]}>
+                            <Text style={{color:'#fff'}}>退出登录</Text>
+                        </Button>:<Button full warning style={[baseStyle.buttonSubymit,baseStyle.btnBase]}>
+                            <Text style={{color:'#fff'}}>免费试玩</Text>
+                        </Button>
+                    }
                 </View>
             </View>
         </SafeAreaView>
     </ScrollView>
 );
+const DrawContain=connect((state) => ({
+    status: state.loginIn.status,
+    isSuccess: state.loginIn.isSuccess,
+    user: state.loginIn.user,
+}), (dispatch) => ({
+    isLogin: (user) => dispatch(isLogin(user)),
+}))(CustomDrawerContentComponent);
 const UserStack = createStackNavigator({
     User: {
         screen: User,
@@ -296,6 +337,16 @@ const UserStack = createStackNavigator({
         },
     },
 });
+UserStack.navigationOptions = ({ navigation }) => {
+    let drawerLockMode = 'unlocked';
+    if (navigation.state.index > 0) {
+        drawerLockMode = 'locked-closed';
+    }
+
+    return {
+        drawerLockMode,
+    };
+};
 const Hometab = createBottomTabNavigator({
         Home:HomeStack,
         Activity:Activity
@@ -306,6 +357,16 @@ const Hometab = createBottomTabNavigator({
         )
     }
 );
+Hometab.navigationOptions = ({ navigation }) => {
+    let drawerLockMode = 'unlocked';
+    if (navigation.state.index > 0) {
+        drawerLockMode = 'locked-closed';
+    }
+
+    return {
+        drawerLockMode,
+    };
+};
 const MyDrawerNavigator = createDrawerNavigator({
         Home: {
             screen: Hometab,
@@ -314,12 +375,17 @@ const MyDrawerNavigator = createDrawerNavigator({
             }),
         },
         User:{
-            screen:UserStack
+            screen:UserStack,
+            navigationOptions: () => ({
+                drawerLockMode:'locked-closed'
+            }),
         },
         signIn: {
             screen: signIn,
-            title: '登录',
-            headerTitle:'登录'
+            navigationOptions: () => ({
+                title: `登录`,
+                drawerLockMode:'locked-closed'
+            }),
         },
         Register: {
             screen: Register,
@@ -339,7 +405,7 @@ const MyDrawerNavigator = createDrawerNavigator({
             activeTintColor: baseStyle.acyive(true),
             inactiveTintColor: '#fff',
         },
-        contentComponent: CustomDrawerContentComponent,//自定义侧边栏
+        contentComponent: DrawContain,//自定义侧边栏
         drawerType: 'slide',
         defaultNavigationOptions: {
             headerStyle: {

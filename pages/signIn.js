@@ -69,7 +69,7 @@ class SignIn extends Component {
               let page= this.props.navigation.getParam('pageName');
               if(page)
               {
-                  this.props.navigation.navigate('User')
+                  this.props.navigation.navigate(page)
               }
               else {
                   this.props.navigation.navigate('Home');

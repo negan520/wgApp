@@ -1,7 +1,20 @@
 import React, {Component} from 'react';
-import {Text, View, Image, ImageBackground, StyleSheet, FlatList, ScrollView, AsyncStorage,TouchableOpacity,PanResponder} from 'react-native';
+import {
+    Text,
+    View,
+    Image,
+    ImageBackground,
+    StyleSheet,
+    FlatList,
+    ScrollView,
+    AsyncStorage,
+    TouchableOpacity,
+    PanResponder,
+    ActivityIndicator,
+    Share,
+} from 'react-native';
 import Swiper from 'react-native-swiper';
-import {Container, Header, Tab, Tabs, TabHeading,Button} from 'native-base';
+import {Container, Header, Tab, Tabs, TabHeading, Button, Content} from 'native-base';
 import {getInfo, getSwiper, getGameList, getChildGameList} from '../serve/getData';
 import {imageUrl, signOut} from "../serve/getData";
 import {baseStyle} from "../style/base";
@@ -123,7 +136,8 @@ class HomeScreen extends Component {
                 {name:'电子',active:require('../images/active_gameType_Egames.png'),img:require('../images/gameType_Egames.png')},
                 {name:'捕鱼',active:require('../images/active_gameType_Fish.png'),img:require('../images/gameType_Fish.png')},
                 {name:'体育',active:require('../images/active_gameType_SportsBook.png'),img:require('../images/gameType_SportsBook.png')},
-                ]
+                ],
+            loading:false
         };
         this.changgeTab = (index) => {
             this.setState({tabIndex: index});
@@ -135,38 +149,31 @@ class HomeScreen extends Component {
             }
         }
     }
+    async onShare(){
+        try {
+            const result = await Share.share({
+                message:this.state.lastingDomai,
+            })
 
+            if (result.action === Share.sharedAction) {
+                if (result.activityType) {
+                    // shared with activity type of result.activityType
+                } else {
+                    // shared
+                }
+            } else if (result.action === Share.dismissedAction) {
+                // dismissed
+            }
+        } catch (error) {
+            alert(error.message);
+        }
+    }
     userLoginOut() {
         signOut().then(function (res) {
 
         })
     }
     componentWillMount(){
-        this._panResponder = PanResponder.create({
-            onStartShouldSetPanResponder: (evt, gestureState) => {
-                return true;
-            },
-            onMoveShouldSetPanResponder:  (evt, gestureState) => {
-                return true;
-            },
-            onPanResponderGrant: (evt, gestureState) => {
-                this._highlight();
-            },
-            onPanResponderMove: (evt, gestureState) => {
-                console.log(`gestureState.dx : ${gestureState.dx}   gestureState.dy : ${gestureState.dy}`);
-                this.setState({
-                    marginLeft: this.lastX + gestureState.dx,
-                    marginTop: this.lastY + gestureState.dy,
-                });
-            },
-            onPanResponderRelease: (evt, gestureState) => {
-                this._unhighlight();
-                this.lastX = this.state.marginLeft;
-                this.lastY = this.state.marginTop;
-            },
-            onPanResponderTerminate: (evt, gestureState) => {
-            },
-        });
         getInfo().then(res=> {//获取基本信息
             this.setState({lastingDomai:res.Data.BaseInfo.LastingDomain});
             this.setState({merhcantInfo:res.Data})
@@ -261,7 +268,7 @@ class HomeScreen extends Component {
     render(): React.ReactNode {
         return (
             <View scrollEventThrottle={1} onContentSizeChange={()=>{console.log('0-0-0')}} style={{backgroundColor: '#101d3d',flex:1}}>
-                <Text style={baseStyle.domaiText}>
+                <Text onPress={()=>this.onShare()} style={baseStyle.domaiText}>
                      主页域名:{this.state.lastingDomai}
                 </Text>
                 <View style={{width: '100%', height: 120, backgroundColor: baseStyle.mainBackground.backgroundColor}}>

@@ -80,10 +80,16 @@ export const baseStyle=StyleSheet.create({
         paddingRight:0
     },
     buttonSubymit:{
-        backgroundColor: '#a56001', borderRadius: 5
+        backgroundColor: '#a56001',
+    },
+    buttonDanger:{
+       backgroundColor:'#f53d3d'
+    },
+    btnBase:{
+        borderRadius: 5
     },
     activiNation:{//活动导航
-       flex: 1,flexDirection:'row',justifyContent:'space-evenly',height:41,marginTop:10,alignItems:'center'
+     width:'100%',flexDirection:'row',justifyContent:'space-evenly',height:41,marginTop:5,alignItems:'center'
     },
     activiList:{
         borderWidth:1,height:180,borderStyle:'solid',alignItems:'center',borderColor:'#b37a00'
