@@ -1,5 +1,15 @@
 import React,{ Component } from 'react';
-import {Text,View,ScrollView,WebView,ImageBackground,TouchableHighlight,FlatList} from 'react-native';
+import {
+    Text,
+    View,
+    ScrollView,
+    WebView,
+    ImageBackground,
+    TouchableHighlight,
+    RefreshControl,
+    FlatList,
+    Image
+} from 'react-native';
 import {
     Container,
     Header,
@@ -13,14 +23,17 @@ import {
 import {baseStyle} from "../style/base";
 import {getActivity} from "../serve/getData";
 import Img from '../component/Img';
-import Icon from 'react-native-vector-icons/FontAwesome5';
-import NavigationService from '../config/NavigationService';
+import Immutable from 'immutable';
 export default class Activity extends Component{
     constructor(props) {
         super(props);
         this.state = {
             activiList:[],
-            indexSet:0
+            dataList:[],
+            indexSet:0,
+            loading:false,
+            refreshing: false,
+            isLoreMoreing: 'LoreMoreing',
         };
     }
     activiType={
@@ -29,17 +42,52 @@ export default class Activity extends Component{
         'Lottery':3,
         'Card':1
     };
-    componentWillMount(){
-        getActivity().then(res=> {//获取基本信息
-           if(res.Code == 'NoError')
-           {
-               this.setState({activiList:res.Data})
-           }
+    list(){
+        this.setState({loading:true});
+        getActivity().then(res=> {//获取活动列表
+            if(res.Code == 'NoError')
+            {
+                this.setState({activiList:Immutable.fromJS(res.Data).toJS(),dataList:Immutable.fromJS(res.Data).toJS()});
+                this.setState({loading:false});
+                setTimeout(() => {
+                    this.setState({
+                        refreshing: false,
+                    });
+                }, 200);
+                this.filterActivy(this.state.indexSet)
+            }
         });
+    };
+    Refresh = ()=> {
+        this.list();
+        this.setState({
+            refreshing: true,
+        });
+    };
+    componentWillMount(){
+       this.list()
     }
-    changeIndex(index)
+    filterActivy(tanindex)//筛选活动
     {
-        this.setState({indexSet:index})
+        if (tanindex==0)
+        {
+            this.setState({dataList:this.state.activiList})//全部活动
+        }
+        else {
+            let arr=[];
+            this.state.activiList.map((station,index)=>{
+                if (tanindex===this.activiType[station.PromotionClass])
+                {
+                    arr.push(station)
+                }
+            });
+            this.setState({dataList:arr})
+        }
+    }
+    changeIndex(index)//活动切换
+    {
+        this.setState({indexSet:index});
+        this.filterActivy(index)
     }
     render() {
         return (
@@ -62,14 +110,15 @@ export default class Activity extends Component{
                         ))
                     }
                 </View>
-                <ScrollView>
                   <View style={{flex:1}}>
                       <FlatList
-                          data={this.state.activiList}
+                          data={this.state.dataList}
                           extraData={this.state}
-                          refreshing={true}
+                          keyExtractor={(item, index) => (index)}
+                          horizontal={false}
+                          ListEmptyComponent={()=>(<View style={{flex:1,justifyContent:'center',alignItems:'center'}}><Image style={{width:200,height:160,marginTop:20}}  source={require('../images/null_data.png')} /><Text style={{color:'#fff',fontSize:18,marginTop:10}}>优惠更新中~</Text></View>)}
                           renderItem={({item}) => (
-                              (this.state.indexSet==0||this.state.indexSet==this.activiType[item.PromotionClass])?<View style={{flex:1,padding:10}}>
+                              <View style={{flex:1,padding:10}}>
                                   <View style={baseStyle.activiList}>
                                       <Img source={{uri:'https://image.hnidb.cn/sr/picture/promotion/'+item.Poster}} width={353} height={'auto'}/>
                                       <View style={baseStyle.activiListSet}>
@@ -85,11 +134,13 @@ export default class Activity extends Component{
                                           <Button style={[baseStyle.activiButton]} bordered warning><Text style={{color:'#ffb239'}}>查看结果</Text></Button>
                                       </View>
                                   </View>
-                              </View>:null
+                              </View>
                           )}
+                          refreshControl={
+                              <RefreshControl refreshing={this.state.refreshing} onRefresh={this.Refresh} style={{backgroundColor: 'transparent',color:'red'}}/>
+                          }
                       />
                   </View>
-                </ScrollView>
             </Container>)
     }
 }

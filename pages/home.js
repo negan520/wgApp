@@ -233,7 +233,6 @@ class HomeScreen extends Component {
                 }
             }
             this.setState({gameList: gameType});
-            console.log(this.state.gameList,'sgdhs');
         })
         getChildGameList(JSON.stringify({
             "ParentClassId": 12,
